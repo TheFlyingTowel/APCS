@@ -13,7 +13,7 @@ public class Game implements Runnable {
 	private boolean isRunning = false;
 	private int fps = 0;
 	private int FPS = 60;//Target FPS
-	long targetTime  = 1000000000 / FPS;
+	long targetTime  = 1000 / FPS;
 	private BufferedImage image;
 	
 	void init()
