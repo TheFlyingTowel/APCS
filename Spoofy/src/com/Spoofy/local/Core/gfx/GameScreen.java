@@ -1,12 +1,12 @@
 package com.Spoofy.local.Core.gfx;
 
 import java.awt.Dimension;
+import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
-
 import com.Spoofy.local.Core.Game;
 
-public class GameScreen extends JPanel {
+public class GameScreen extends JPanel{
 
 	/**
 	 * 
@@ -16,8 +16,13 @@ public class GameScreen extends JPanel {
 	
 	public static final int SCALE = 2;
 	
-	public GameScreen() {
+	public GameScreen(KeyListener k) {
 		setPreferredSize(new Dimension(Game.WIDTH * SCALE, Game.HEIGHT * SCALE));
+		setFocusable(true);
+		requestFocus();
+		addKeyListener(k);
 	}
+
+	
 	
 }
