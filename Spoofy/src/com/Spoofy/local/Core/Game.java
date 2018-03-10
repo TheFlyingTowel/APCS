@@ -6,6 +6,9 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.Spoofy.local.Core.gfx.Display;
+import com.Spoofy.local.Core.gfx.GameScreen;
+import com.Spoofy.local.States.GameStates;
+import com.Spoofy.local.States.StartState;
 import com.Spoofy.local.input.KeyboardInput;
 
 public class Game implements Runnable {
@@ -20,22 +23,27 @@ public class Game implements Runnable {
 	private Display display;
 	private KeyboardInput keyInput;
 	private BufferedImage image;
-	private Graphics g;
+	private Graphics2D g;
+	private GameStates state;
 	
 	
 	void init()
 	{
 		//Initialize 
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		g = (Graphics2D) image.getGraphics();
 		display = new Display("Spoofy");
 		keyInput = new KeyboardInput();
 		display.addKeyListener(keyInput);
+		state = new StartState();
+		state.init();
 	}
 	
-	void tick(double delta)
+	void tick(float delta)
 	{
 		//Update
 		keyInput.tick();
+		state.tick(delta);
 	}
 	
 	void draw()
@@ -44,7 +52,8 @@ public class Game implements Runnable {
 		
 		//To screen
 		Graphics g2 = display.getScreen().getGraphics();
-		g2.drawImage(image, 0, 0, null);
+		state.draw(g);
+		g2.drawImage(image, 0, 0,WIDTH * GameScreen.SCALE, HEIGHT * GameScreen.SCALE, null);
 		g2.dispose();
 	}
 	
@@ -56,7 +65,7 @@ public class Game implements Runnable {
 		long targetTime = 1000000000 / FPS;
 		long loop = now;
 		long fpsTime = 0;
-		double delta = 0;
+		float delta = 0;
 		int ticks = 0;
 		
 		while(isRunning){
@@ -79,7 +88,7 @@ public class Game implements Runnable {
 			}
 			
 			try {
-				Thread.sleep(targetTime - loop / 1000000);
+				Thread.sleep(500);
 			}catch(InterruptedException e) {
 				System.err.println("Game Thread could not sleep: -> \n"+e.getMessage());
 			}

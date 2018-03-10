@@ -14,6 +14,7 @@ public class Display extends JFrame{
 	public Display(String title)
 	{
 		super(title);
+		createDisplay();
 	}
 	
 	void createDisplay()
@@ -24,10 +25,10 @@ public class Display extends JFrame{
 		setPreferredSize(Game.dimention);
 		screen = new GameScreen(null);
 		add(screen);
-		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
-		setVisible(true);
 		pack();
+		setVisible(true);
 	}
 	
 	public GameScreen getScreen() {
