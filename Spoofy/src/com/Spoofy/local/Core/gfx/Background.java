@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.Game;
 import com.Spoofy.local.Utils.Vectors2F;
 
@@ -15,9 +16,10 @@ public class Background {
 	private Vectors2F direction;
 	
 	private double moveScale;
+	private Handler handler;
 	
-	public Background(String path, double ms) {
-		
+	public Background(Handler h,String path, double ms) {
+		handler = h;
 		try {
 			img = ImageIO.read(getClass().getResourceAsStream(path));
 			moveScale = ms;
@@ -44,15 +46,18 @@ public class Background {
 	}
 	
 	public void draw(Graphics2D g) {
-		g.drawImage(img, (int)position.x, (int)position.y, Game.WIDTH / GameScreen.SCALE, Game.HEIGHT / GameScreen.SCALE,null);
+		g.drawImage(img, (int)position.x, (int)position.y, (Game.WIDTH / 2) + 8  , Game.HEIGHT / 2 ,null);
 		
 		if(position.x < 0) {
 			g.drawImage(img, (int) position.x + Game.WIDTH, (int) position.y, null);
+			setPosition(new Vectors2F());
 		}
 		
 		if(position.x > 0) {
 			g.drawImage(img, (int)position.x - Game.WIDTH , (int) position.y, null);
 		}
+		
+		
 	} 
 	
 }

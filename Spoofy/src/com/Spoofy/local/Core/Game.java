@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.gfx.Display;
 import com.Spoofy.local.Core.gfx.GameScreen;
 import com.Spoofy.local.States.GameStates;
@@ -13,7 +14,7 @@ import com.Spoofy.local.input.KeyboardInput;
 
 public class Game implements Runnable {
 
-	public static final int WIDTH = 1080, HEIGHT = 720;
+	public static final int WIDTH = 540, HEIGHT = 360;
 	public static final Dimension dimention = new Dimension(WIDTH,HEIGHT);
 	
 	private Thread thread;
@@ -30,12 +31,13 @@ public class Game implements Runnable {
 	void init()
 	{
 		//Initialize 
+		Handler handler = new Handler(this);
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 		display = new Display("Spoofy");
 		keyInput = new KeyboardInput();
 		display.addKeyListener(keyInput);
-		state = new StartState();
+		state = new StartState(handler);
 		state.init();
 	}
 	
@@ -121,5 +123,11 @@ public class Game implements Runnable {
 			}
 		}
 	}
+	
+	public BufferedImage getGameImage(){
+		return image;
+	}
+	
+	
 	
 }

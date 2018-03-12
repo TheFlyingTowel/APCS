@@ -23,6 +23,7 @@ public class Display extends JFrame{
 		setMinimumSize(new Dimension(Game.dimention));
 		setMaximumSize(Game.dimention);
 		setPreferredSize(Game.dimention);
+		setResizable(false);
 		screen = new GameScreen(null);
 		add(screen);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
