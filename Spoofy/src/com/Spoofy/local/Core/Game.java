@@ -14,7 +14,7 @@ import com.Spoofy.local.input.KeyboardInput;
 
 public class Game implements Runnable {
 
-	public static final int WIDTH = 540, HEIGHT = 360;
+	public static final int WIDTH = 720, HEIGHT = 460;
 	public static final Dimension dimention = new Dimension(WIDTH,HEIGHT);
 	
 	private Thread thread;
@@ -55,7 +55,7 @@ public class Game implements Runnable {
 		//To screen
 		Graphics g2 = display.getScreen().getGraphics();
 		state.draw(g);
-		g2.drawImage(image, 0, 0,WIDTH * GameScreen.SCALE, HEIGHT * GameScreen.SCALE, null);
+		g2.drawImage(image, 0, 0,WIDTH , HEIGHT , null);
 		g2.dispose();
 	}
 	
@@ -128,6 +128,11 @@ public class Game implements Runnable {
 		return image;
 	}
 	
-	
-	
+	public GameScreen getGameScreen() {
+		return display.getScreen();
+	}
+	 
+	public int getFPS() {
+		return fps;
+	}
 }

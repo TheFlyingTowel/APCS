@@ -16,7 +16,7 @@ public class Background {
 	private Vectors2F direction;
 	
 	private double moveScale;
-	private Handler handler;
+	Handler handler;
 	
 	public Background(Handler h,String path, double ms) {
 		handler = h;
@@ -41,16 +41,18 @@ public class Background {
 	
 	
 	public void tick() {
-		position.x += (direction.x % Game.WIDTH);
-		position.y += (direction.y % Game.HEIGHT);
+		//position.x += (direction.x % Game.WIDTH) * moveScale;
+		//position.y += (direction.y % Game.HEIGHT) * moveScale;
+		position.add(direction.mod(new Vectors2F(Game.WIDTH,Game.HEIGHT).multi(moveScale)));
+		
+		
 	}
 	
 	public void draw(Graphics2D g) {
-		g.drawImage(img, (int)position.x, (int)position.y, (Game.WIDTH / 2) + 8  , Game.HEIGHT / 2 ,null);
+		g.drawImage(img, (int)position.x, (int)position.y,null);
 		
 		if(position.x < 0) {
-			g.drawImage(img, (int) position.x + Game.WIDTH, (int) position.y, null);
-			setPosition(new Vectors2F());
+			g.drawImage(img, (int)( position.x + Game.WIDTH) % 2, (int) position.y, null);
 		}
 		
 		if(position.x > 0) {

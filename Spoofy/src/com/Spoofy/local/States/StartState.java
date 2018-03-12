@@ -17,7 +17,7 @@ public class StartState extends GameStates{
 	public void init() {
 		bg = new Background(handler,"/Background/grassbg1.png", 1);
 		bg.setPosition(new Vectors2F());
-		bg.setDirection(new Vectors2F(-5.9,0));
+		bg.setDirection(new Vectors2F(-.5,0));
 	}
 
 	@Override

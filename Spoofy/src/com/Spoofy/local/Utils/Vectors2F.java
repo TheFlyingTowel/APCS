@@ -43,12 +43,26 @@ public class Vectors2F {
 		return new Vectors2F(nx ,ny);
 	}
 	
+	public Vectors2F mod(Vectors2F v) 
+	{
+		double nx = this.x %= v.x;
+		double ny = this.y %= v.y;
+		return new Vectors2F(nx ,ny);
+	}
+	
+	
 	public Vectors2F multi(Vectors2F v) 
 	{
 		double nx = this.x *= v.x;
 		double ny = this.y *= v.y;
 		return new Vectors2F(nx ,ny);
 	}
+	
+	public Vectors2F multi(double n) 
+	{
+		return new Vectors2F(this.x *= n, this .y *= n);
+	}
+	
 	
 	public Vectors2F copy(Vectors2F v) 
 	{

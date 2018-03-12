@@ -9,6 +9,11 @@ import com.Spoofy.local.Core.Game;
 
 public class Display extends JFrame{
 
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8437664347489886827L;
 	GameScreen screen;
 	
 	public Display(String title)
