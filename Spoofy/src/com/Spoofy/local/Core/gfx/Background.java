@@ -10,12 +10,12 @@ import javax.imageio.ImageIO;
 
 import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.Game;
-import com.Spoofy.local.Utils.Vectors2F;
+import com.Spoofy.local.Utils.Vector2F;
 
 public class Background {
 	private BufferedImage img;
-	private Vectors2F position;
-	private Vectors2F direction;
+	private Vector2F position;
+	private Vector2F direction;
 	
 	private double moveScale;
 	Handler handler;
@@ -31,11 +31,11 @@ public class Background {
 		
 	}
 	
-	public void setPosition(Vectors2F pos) {
-		position = new Vectors2F((pos.x * moveScale) % Game.WIDTH,(pos.y * moveScale) % Game.HEIGHT);
+	public void setPosition(Vector2F pos) {
+		position = new Vector2F((pos.x * moveScale) % Game.WIDTH,(pos.y * moveScale) % Game.HEIGHT);
 	}
 	
-	public void setDirection(Vectors2F dir) {
+	public void setDirection(Vector2F dir) {
 		this.direction = dir;
 	}
 	
@@ -74,19 +74,19 @@ public class Background {
 		
 		//X
 		if( position.x > (Game.WIDTH / GameScreen.SCALE)){
-			setPosition(new Vectors2F(-(Game.WIDTH / GameScreen.SCALE), 0));
+			setPosition(new Vector2F(-(Game.WIDTH / GameScreen.SCALE), 0));
 		}
 		if( position.x < -(Game.WIDTH + img.getWidth())){
-			setPosition(new Vectors2F(Game.WIDTH + img.getWidth(), 0));
+			setPosition(new Vector2F(Game.WIDTH + img.getWidth(), 0));
 		}
 		
 		//Y
 		if(position.y > (Game.HEIGHT / GameScreen.SCALE)) {
-			setPosition(new Vectors2F(0, -(Game.HEIGHT / GameScreen.SCALE)));
+			setPosition(new Vector2F(0, -(Game.HEIGHT / GameScreen.SCALE)));
 		}
 		
 		if(position.y < -(Game.HEIGHT / GameScreen.SCALE)) {
-			setPosition(new Vectors2F(0, (Game.HEIGHT / GameScreen.SCALE)));
+			setPosition(new Vector2F(0, (Game.HEIGHT / GameScreen.SCALE)));
 		}
 		
 		
@@ -94,11 +94,11 @@ public class Background {
 		
 	} 
 	
-	public Vectors2F getPosition() {
+	public Vector2F getPosition() {
 		return position;
 	}
 	
-	public Vectors2F getDirection() {
+	public Vector2F getDirection() {
 		return direction;
 	}
 	

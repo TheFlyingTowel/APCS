@@ -1,85 +1,85 @@
 package com.Spoofy.local.Utils;
 
-public class Vectors2F {
+public class Vector2F {
 
 	public static double worldX, worldY;
 	public double x = 0,y = 0;
 	
-	public Vectors2F(double x, double y)
+	public Vector2F(double x, double y)
 	{
 		this.x = x;
 		this.y = y;
 	}
 	
-	public Vectors2F()
+	public Vector2F()
 	{
 		
 	}
 	
-	public Vectors2F zero()
+	public Vector2F zero()
 	{
-		return new Vectors2F();
+		return new Vector2F();
 	}
 	
-	public Vectors2F add(Vectors2F v)
+	public Vector2F add(Vector2F v)
 	{
 		double  nx = this.x += v.x;
 		double  ny = this.y += v.y;
-		return new Vectors2F(nx ,ny);
+		return new Vector2F(nx ,ny);
 	}
 	
-	public Vectors2F sub(Vectors2F v)
+	public Vector2F sub(Vector2F v)
 	{
 		double nx = this.x -= v.x;
 		double ny = this.y -= v.y;
-		return new Vectors2F(nx ,ny);
+		return new Vector2F(nx ,ny);
 
 	}
 	
-	public Vectors2F div(Vectors2F v)
+	public Vector2F div(Vector2F v)
 	{
 		double nx = this.x /= v.x;
 		double ny = this.y /= v.y;
-		return new Vectors2F(nx ,ny);
+		return new Vector2F(nx ,ny);
 	}
 	
-	public Vectors2F mod(Vectors2F v) 
+	public Vector2F mod(Vector2F v) 
 	{
 		double nx = this.x %= v.x;
 		double ny = this.y %= v.y;
-		return new Vectors2F(nx ,ny);
+		return new Vector2F(nx ,ny);
 	}
 	
 	
-	public Vectors2F multi(Vectors2F v) 
+	public Vector2F multi(Vector2F v) 
 	{
 		double nx = this.x *= v.x;
 		double ny = this.y *= v.y;
-		return new Vectors2F(nx ,ny);
+		return new Vector2F(nx ,ny);
 	}
 	
-	public Vectors2F multi(double n) 
+	public Vector2F multi(double n) 
 	{
-		return new Vectors2F(this.x *= n, this .y *= n);
+		return new Vector2F(this.x *= n, this .y *= n);
 	}
 	
 	
-	public Vectors2F copy(Vectors2F v) 
+	public Vector2F copy(Vector2F v) 
 	{
 		double nx = v.x;
 		double ny = v.y;
-		return new Vectors2F(nx ,ny);
+		return new Vector2F(nx ,ny);
 	}
 	
-	public boolean equal(Vectors2F v) 
+	public boolean equal(Vector2F v) 
 	{
 		return (this.x == v.x && this.y == v.y);
 	}
 	
-	public Vectors2F negate() {
+	public Vector2F negate() {
 		double nx = x = x * (-1);
 		double ny = y = y * (-1);
-		return new Vectors2F(nx, ny);
+		return new Vector2F(nx, ny);
 	}
 	
 	public double vecMag() 
@@ -87,12 +87,12 @@ public class Vectors2F {
 		return (Math.sqrt((x * x) + (y * y)));
 	}
 	
-	public Vectors2F getPosOnscreen() 
+	public Vector2F getPosOnscreen() 
 	{
-		return new Vectors2F(x - worldX, y - worldY);
+		return new Vector2F(x - worldX, y - worldY);
 	}
 	
-	public double getDistanceBetweenVectors(Vectors2F v) 
+	public double getDistanceBetweenVectors(Vector2F v) 
 	{
 		double nx = x - v.x;
 		double ny = y - v.y;

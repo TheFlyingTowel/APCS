@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.gfx.Background;
 import com.Spoofy.local.Utils.Debugger;
-import com.Spoofy.local.Utils.Vectors2F;
+import com.Spoofy.local.Utils.Vector2F;
 
 public class StartState extends State{
 
@@ -18,8 +18,8 @@ public class StartState extends State{
 	@Override
 	public void init() {
 		bg = new Background(handler,"/Background/grassbg1.png", 1.00005);
-		bg.setPosition(new Vectors2F());
-		bg.setDirection(new Vectors2F(0.5,0));
+		bg.setPosition(new Vector2F());
+		bg.setDirection(new Vector2F(0.5,0));
 		debug = new Debugger(handler);
 		debug.init();
 		debug.addDebugText("FPS: ");
