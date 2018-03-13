@@ -7,7 +7,7 @@ import com.Spoofy.local.Core.gfx.Background;
 import com.Spoofy.local.Utils.Debugger;
 import com.Spoofy.local.Utils.Vectors2F;
 
-public class StartState extends GameStates{
+public class StartState extends State{
 
 	Background bg;
 	Debugger debug;

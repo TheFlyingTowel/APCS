@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.gfx.Display;
 import com.Spoofy.local.Core.gfx.GameScreen;
-import com.Spoofy.local.States.GameStates;
+import com.Spoofy.local.States.State;
 import com.Spoofy.local.States.StartState;
 import com.Spoofy.local.Utils.Debug;
 import com.Spoofy.local.Utils.Debugger;
@@ -27,7 +27,7 @@ public class Game implements Runnable {
 	private KeyboardInput keyInput;
 	private BufferedImage image;
 	private Graphics2D g;
-	private GameStates state;
+	private State state;
 	private Debug MainDebug;
 	
 	void init()
