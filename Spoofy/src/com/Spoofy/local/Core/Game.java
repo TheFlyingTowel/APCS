@@ -10,6 +10,8 @@ import com.Spoofy.local.Core.gfx.Display;
 import com.Spoofy.local.Core.gfx.GameScreen;
 import com.Spoofy.local.States.GameStates;
 import com.Spoofy.local.States.StartState;
+import com.Spoofy.local.Utils.Debug;
+import com.Spoofy.local.Utils.Debugger;
 import com.Spoofy.local.input.KeyboardInput;
 
 public class Game implements Runnable {
@@ -26,12 +28,14 @@ public class Game implements Runnable {
 	private BufferedImage image;
 	private Graphics2D g;
 	private GameStates state;
-	
+	private Debug MainDebug;
 	
 	void init()
 	{
 		//Initialize 
 		Handler handler = new Handler(this);
+		MainDebug = new Debugger(handler);
+		MainDebug.mInit();
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 		display = new Display("Spoofy");
@@ -39,23 +43,32 @@ public class Game implements Runnable {
 		display.addKeyListener(keyInput);
 		state = new StartState(handler);
 		state.init();
+		
+		
+		
+		
 	}
 	
 	void tick(float delta)
 	{
 		//Update
+		
 		keyInput.tick();
 		state.tick(delta);
+		MainDebug.mTick(delta);
 	}
 	
 	void draw()
 	{
 		//Render
-		
 		//To screen
 		Graphics g2 = display.getScreen().getGraphics();
 		state.draw(g);
-		g2.drawImage(image, 0, 0,WIDTH , HEIGHT , null);
+		
+		
+		MainDebug.mDraw(g);// Must always be drawn last
+		
+		g2.drawImage(image, 0, 0,WIDTH * GameScreen.SCALE, (HEIGHT * GameScreen.SCALE) - (HEIGHT % 5) , null);
 		g2.dispose();
 	}
 	
@@ -90,7 +103,7 @@ public class Game implements Runnable {
 			}
 			
 			try {
-				Thread.sleep(500);
+				Thread.sleep((long) (loop - now + targetTime) / 1000000);
 			}catch(InterruptedException e) {
 				System.err.println("Game Thread could not sleep: -> \n"+e.getMessage());
 			}
@@ -134,5 +147,8 @@ public class Game implements Runnable {
 	 
 	public int getFPS() {
 		return fps;
+	}
+	public Debug getDebugger() {
+		return MainDebug;
 	}
 }

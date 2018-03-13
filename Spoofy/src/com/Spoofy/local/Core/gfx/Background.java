@@ -1,5 +1,7 @@
 package com.Spoofy.local.Core.gfx;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -41,25 +43,67 @@ public class Background {
 	
 	
 	public void tick() {
-		//position.x += (direction.x % Game.WIDTH) * moveScale;
-		//position.y += (direction.y % Game.HEIGHT) * moveScale;
-		position.add(direction.mod(new Vectors2F(Game.WIDTH,Game.HEIGHT).multi(moveScale)));
-		
+		position.x += (direction.x % Game.WIDTH) * moveScale;
+		position.y += (direction.y % Game.HEIGHT) * moveScale;
+		//position.add(direction.mod(new Vectors2F(Game.WIDTH,Game.HEIGHT).multi(moveScale)));
+		//position.add(direction);
 		
 	}
 	
 	public void draw(Graphics2D g) {
-		g.drawImage(img, (int)position.x, (int)position.y,null);
 		
-		if(position.x < 0) {
-			g.drawImage(img, (int)( position.x + Game.WIDTH) % 2, (int) position.y, null);
+		//X
+		g.drawImage(img, (int)position.x, (int)position.y,Game.WIDTH / GameScreen.SCALE,Game.HEIGHT / GameScreen.SCALE,null);
+		if(position.x < 0){
+			g.drawImage(img, ((int)position.x + Game.WIDTH / GameScreen.SCALE ),(int) position.y,Game.WIDTH / GameScreen.SCALE,Game.HEIGHT / GameScreen.SCALE ,null);
+		}
+		if(position.x > 0){
+			g.drawImage(img, (int)position.x - Game.WIDTH  / GameScreen.SCALE,(int) position.y, Game.WIDTH / GameScreen.SCALE,Game.HEIGHT / GameScreen.SCALE,null);
 		}
 		
-		if(position.x > 0) {
-			g.drawImage(img, (int)position.x - Game.WIDTH , (int) position.y, null);
+		//Y
+		if(position.y < 0){
+			g.drawImage(img, ((int)position.x),(int) position.y + Game.HEIGHT / GameScreen.SCALE, Game.WIDTH / GameScreen.SCALE,Game.HEIGHT / GameScreen.SCALE ,null);
 		}
+		
+		if(position.y > 0){
+			g.drawImage(img, ((int)position.x),(int) position.y - Game.HEIGHT / GameScreen.SCALE, Game.WIDTH / GameScreen.SCALE, Game.HEIGHT / GameScreen.SCALE ,null);
+		}
+		
+		////////////////////////////////////////////////////////////////////////////////////////////
+		
+		//X
+		if( position.x > (Game.WIDTH / GameScreen.SCALE)){
+			setPosition(new Vectors2F(-(Game.WIDTH / GameScreen.SCALE), 0));
+		}
+		if( position.x < -(Game.WIDTH + img.getWidth())){
+			setPosition(new Vectors2F(Game.WIDTH + img.getWidth(), 0));
+		}
+		
+		//Y
+		if(position.y > (Game.HEIGHT / GameScreen.SCALE)) {
+			setPosition(new Vectors2F(0, -(Game.HEIGHT / GameScreen.SCALE)));
+		}
+		
+		if(position.y < -(Game.HEIGHT / GameScreen.SCALE)) {
+			setPosition(new Vectors2F(0, (Game.HEIGHT / GameScreen.SCALE)));
+		}
+		
+		
 		
 		
 	} 
+	
+	public Vectors2F getPosition() {
+		return position;
+	}
+	
+	public Vectors2F getDirection() {
+		return direction;
+	}
+	
+	public double getMoveScale() {
+		return moveScale;
+	}
 	
 }

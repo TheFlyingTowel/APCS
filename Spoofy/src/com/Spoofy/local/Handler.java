@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 
 import com.Spoofy.local.Core.Game;
 import com.Spoofy.local.Core.gfx.GameScreen;
+import com.Spoofy.local.Utils.Debug;
+
 
 public class Handler {
 	Game game;
@@ -20,4 +22,11 @@ public class Handler {
 		return game.getGameScreen();
 	}
 	
+	public int getFPS(){
+		return game.getFPS();
+	}
+	
+	public Debug getDebugger() {
+		return game.getDebugger();
+	}
 }
