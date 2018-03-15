@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import com.Spoofy.local.Core.Game;
 import com.Spoofy.local.Core.gfx.GameScreen;
 import com.Spoofy.local.Utils.Debug;
+import com.Spoofy.local.input.KeyboardInput;
 
 
 public class Handler {
@@ -12,6 +13,11 @@ public class Handler {
 	
 	public Handler(Game g) {
 		game = g;
+	}
+	
+	
+	public KeyboardInput getKeyInput() {
+		return game.keys();
 	}
 	
 	public BufferedImage getGameImage() {
@@ -29,4 +35,7 @@ public class Handler {
 	public Debug getDebugger() {
 		return game.getDebugger();
 	}
+	
+
+	
 }

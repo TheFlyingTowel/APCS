@@ -15,10 +15,11 @@ public class Display extends JFrame{
 	 */
 	private static final long serialVersionUID = 8437664347489886827L;
 	GameScreen screen;
-	
-	public Display(String title)
+	KeyListener kl;
+	public Display(String title, KeyListener k)
 	{
 		super(title);
+		kl = k;
 		createDisplay();
 	}
 	
@@ -29,13 +30,16 @@ public class Display extends JFrame{
 		setMaximumSize(Game.dimention);
 		setPreferredSize(Game.dimention);
 		setResizable(false);
-		screen = new GameScreen(null);
-		screen.setPreferredSize(new Dimension(Game.WIDTH , Game.HEIGHT));
-		add(screen);
+		setVisible(true);
+		screen = new GameScreen(kl);
+		screen.setPreferredSize(new Dimension(Game.WIDTH * GameScreen.SCALE, Game.HEIGHT * GameScreen.SCALE));
+		setContentPane(screen);
+		screen.addKeyListener(kl);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+		screen.requestFocus();
 		pack();
-		setVisible(true);
+		
 	}
 	
 	public GameScreen getScreen() {

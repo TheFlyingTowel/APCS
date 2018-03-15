@@ -43,12 +43,13 @@ public class KeyboardInput implements KeyListener{
 		btn1 = key[keyCodes[4]];
 		btn2 = key[keyCodes[5]];
 		
+		
+		
 	}
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		key[e.getKeyCode()] = true;
-		
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {

@@ -36,6 +36,9 @@ public class Vector2F {
 
 	}
 	
+
+	
+	
 	public Vector2F div(Vector2F v)
 	{
 		double nx = this.x /= v.x;
@@ -64,11 +67,10 @@ public class Vector2F {
 	}
 	
 	
-	public Vector2F copy(Vector2F v) 
+	public void copy(Vector2F v) 
 	{
-		double nx = v.x;
-		double ny = v.y;
-		return new Vector2F(nx ,ny);
+		this.x = v.x;
+		this.y = v.y;
 	}
 	
 	public boolean equal(Vector2F v) 
