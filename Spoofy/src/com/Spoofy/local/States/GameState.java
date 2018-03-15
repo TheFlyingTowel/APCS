@@ -30,7 +30,7 @@ public class GameState extends State{
 		tileMap.loadMap("/Maps/level1-1.map");
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(0.1);
-		player = new Player(handler, 64, 64, 68, 68, tileMap, new Dimension(68, 68));
+		player = new Player(handler, 64, 64, 68, 68, tileMap, new Dimension(16, 59));
 		player.init();
 	}
 

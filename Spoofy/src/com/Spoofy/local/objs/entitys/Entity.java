@@ -106,12 +106,11 @@ public class Entity extends GameObject{
 
 	public void tick(float delta) {
 		super.tick(delta);
-		getNextPosition();
 		checkMapCollision();
+		getNextPosition();
 		setPosition(new Vector2F(xtemp, ytemp));
 	}
-	
-	
+		
 	public void draw(Graphics2D g) {
 		//setMapPosition();
 		if(faceingRight){
@@ -131,8 +130,6 @@ public class Entity extends GameObject{
 	public void setCurrentAni(int currentAni) {
 		this.currentAni = currentAni;
 	}
-
-
 	
 	public boolean isFalling() {
 		return falling;
@@ -142,21 +139,17 @@ public class Entity extends GameObject{
 		return moveSpeed;
 	}
 
-
 	public void setMoveSpeed(double moveSpeed) {
 		this.moveSpeed = moveSpeed;
 	}
-
 
 	public double getMaxMoveSpeed() {
 		return maxMoveSpeed;
 	}
 
-
 	public void setMaxMoveSpeed(double maxMoveSpeed) {
 		this.maxMoveSpeed = maxMoveSpeed;
 	}
-
 
 	public double getStopSpeed() {
 		return stopSpeed;
