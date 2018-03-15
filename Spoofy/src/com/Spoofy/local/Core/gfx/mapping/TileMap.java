@@ -8,7 +8,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
-import javax.naming.directory.DirContext;
 
 import com.Spoofy.local.Core.Game;
 import com.Spoofy.local.Utils.Vector2F;
@@ -33,8 +32,8 @@ public class TileMap {
 	
 	public TileMap(int tileSize) {
 		this.tileSize = tileSize;
-		rowsToDraw = Game.WIDTH / tileSize;
-		colsToDraw = Game.HEIGHT / tileSize;
+		rowsToDraw = Game.WIDTH / tileSize + 2;
+		colsToDraw = Game.HEIGHT / tileSize + 2;
 		tween = 0.07;
 		position = new Vector2F();
 		min = new Vector2F();
@@ -59,7 +58,7 @@ public class TileMap {
 				
 				tiles[0][col] = new Tile(subImage,Tile.NORMAL);
 				subImage = tileSet.getSubimage(col * tileSize, tileSize, tileSize, tileSize);
-				
+			
 				tiles[1][col] = new Tile(subImage, Tile.BLOCKED);
 			}
 			

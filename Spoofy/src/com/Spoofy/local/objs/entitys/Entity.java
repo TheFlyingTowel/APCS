@@ -104,7 +104,8 @@ public class Entity extends GameObject{
 		}
 	}
 
-	public void tick() {
+	public void tick(float delta) {
+		super.tick(delta);
 		getNextPosition();
 		checkMapCollision();
 		setPosition(new Vector2F(xtemp, ytemp));
@@ -112,15 +113,12 @@ public class Entity extends GameObject{
 	
 	
 	public void draw(Graphics2D g) {
-		setMapPosition();
-		
+		//setMapPosition();
 		if(faceingRight){
 			g.drawImage(animation.getCurrentFrame().getImage(), (int) (position.x + mapPos.x - dimention.width / 2), (int) (position.y + mapPos.y - dimention.height / 2),null);
 		}else{
 			g.drawImage(animation.getCurrentFrame().getImage(), (int) (position.x + mapPos.x - dimention.width / 2  + dimention.width)  , (int) (position.y + mapPos.y - dimention.height / 2),-dimention.width,dimention.height,null);
 		}
-		
-		
 	}
 	
 	

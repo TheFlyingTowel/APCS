@@ -27,7 +27,7 @@ public class GameState extends State{
 		bg.setDirection(new Vector2F());
 		tileMap = new TileMap(30);
 		tileMap.loadTiles("/Tiles_Sets/grasstileset.png");
-		tileMap.loadMap("/Maps/Enter_World.map");
+		tileMap.loadMap("/Maps/level1-1.map");
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(0.1);
 		player = new Player(handler, 64, 64, 68, 68, tileMap, new Dimension(68, 68));
@@ -44,7 +44,7 @@ public class GameState extends State{
 		player.setJumping(handler.getKeyInput().isUp());
 		player.setLeft(handler.getKeyInput().isLeft());
 		player.setRight(handler.getKeyInput().isRight());
-		player.tick();
+		player.tick(delta);
 		tileMap.setPosition((Game.WIDTH / 6) - player.getPosition().x,(Game.HEIGHT / 6) - player.getPosition().y);
 		
 	}

@@ -69,7 +69,7 @@ public class Game implements Runnable {
 		
 		MainDebug.mDraw(g);// Must always be drawn last
 		
-		g2.drawImage(image, 0, 0,(WIDTH * GameScreen.SCALE) - 8, (HEIGHT * GameScreen.SCALE) - 58  , null);
+		g2.drawImage(image, 0, 0,(WIDTH * GameScreen.SCALE), (HEIGHT * GameScreen.SCALE)  , null);
 		g2.dispose();
 	}
 	

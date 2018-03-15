@@ -61,46 +61,50 @@ public class Player extends Entity{
 		stopJumpSpeed = 0.3;
 	}
 	
+	public void tick(float delta){
+		super.tick(delta);
+	}
+	
 	
 	public void draw(Graphics2D g) {
-		//g.setColor(Color.darkGray);
 		super.draw(g);
-				switch (currentAni) {
-					case JUMP_ANI:
-					//	g.drawString("Current Animation: "+"JUMPING     ----->>"+ currentAni, 0, 100);
-						setAnimation(new Animation(jumpSet, 0.5f));
-						break;
+		switch (currentAni) {
+			case JUMP_ANI:
+			//	g.drawString("Current Animation: "+"JUMPING     ----->>"+ currentAni, 0, 100);
+				setAnimation(new Animation(jumpSet, 0.5f));
+				break;
 				
-					case FALL_ANI:
-					//	g.drawString("Current Animation: "+"FALLING     ----->>"+ currentAni, 0, 100);
-						break;
+			case FALL_ANI:
+			//	g.drawString("Current Animation: "+"FALLING     ----->>"+ currentAni, 0, 100);
+				break;
 					
-					case MOVE_LEFT_ANI:
-					//	g.drawString("Current Animation: "+"MOVE_LEFT     ----->>"+ currentAni, 0, 100);
-						setAnimation(new Animation(walkSet, 0.5f));
-						break;
+			case MOVE_LEFT_ANI:
+			//	g.drawString("Current Animation: "+"MOVE_LEFT     ----->>"+ currentAni, 0, 100);
+				setAnimation(new Animation(walkSet, 0.5f));
+				break;
 				
-					case MOVE_RIGHT_ANI:
-					//	g.drawString("Current Animation: "+"MOVE_RIGHT     ----->>"+ currentAni, 0, 100);
-						setAnimation(new Animation(walkSet, 0.5f));
-						break;
+			case MOVE_RIGHT_ANI:
+			//	g.drawString("Current Animation: "+"MOVE_RIGHT     ----->>"+ currentAni, 0, 100);
+				setAnimation(new Animation(walkSet, 0.5f));
+				break;
 					
-					case STOP_LEFT_ANI:
-					//	g.drawString("Current Animation: "+"STOP_LEFT     ----->>"+ currentAni, 0, 100);
-						break;
+			case STOP_LEFT_ANI:
+			//	g.drawString("Current Animation: "+"STOP_LEFT     ----->>"+ currentAni, 0, 100);
+				break;
 				
-					case STOP_RIGHT_ANI:
-					//	g.drawString("Current Animation: "+"STOP_RIGHT     ----->>"+ currentAni, 0, 100);
-						break;
+			case STOP_RIGHT_ANI:
+			//	g.drawString("Current Animation: "+"STOP_RIGHT     ----->>"+ currentAni, 0, 100);
+				break;
 					
-					case STILL_ANI:
-					//	g.drawString("Current Animation: "+"IDLE     ----->>"+ currentAni, 0, 100);
-						setAnimation(new Animation(stillSet, 0.5f));
-						break;
+			case STILL_ANI:
+			//	g.drawString("Current Animation: "+"IDLE     ----->>"+ currentAni, 0, 100);
+				setAnimation(new Animation(stillSet, 0.5f));
+				break;
 					
-					default:
-						break;
-				}
+			default:
+				break;
+				
+			}
 				
 				
 				

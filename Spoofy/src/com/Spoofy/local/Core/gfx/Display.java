@@ -29,6 +29,7 @@ public class Display extends JFrame{
 		setMinimumSize(new Dimension(Game.dimention));
 		setMaximumSize(Game.dimention);
 		setPreferredSize(Game.dimention);
+		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
 		screen = new GameScreen(kl);
@@ -36,7 +37,6 @@ public class Display extends JFrame{
 		setContentPane(screen);
 		screen.addKeyListener(kl);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
 		screen.requestFocus();
 		pack();
 		
