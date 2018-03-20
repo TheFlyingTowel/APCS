@@ -17,7 +17,7 @@ import com.Spoofy.local.input.KeyboardInput;
 
 public class Game implements Runnable {
 
-	public static final int WIDTH = 720, HEIGHT = 460;
+	public static final int WIDTH = 1080, HEIGHT = 720;
 	public static final Dimension dimention = new Dimension(WIDTH,HEIGHT);
 	
 	private Thread thread;
@@ -35,13 +35,13 @@ public class Game implements Runnable {
 	{
 		//Initialize 
 		Handler handler = new Handler(this);
+		keyInput = new KeyboardInput();
 		MainDebug = new Debugger(handler);
 		MainDebug.mInit();
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 		display = new Display("Spoofy",keyInput);
 		display.setKeyListener(keyInput);
-		keyInput = new KeyboardInput();
 		state = new GameState(handler);
 		state.init();
 		
@@ -69,7 +69,7 @@ public class Game implements Runnable {
 		
 		MainDebug.mDraw(g);// Must always be drawn last
 		
-		g2.drawImage(image, 0, 0,(WIDTH * GameScreen.SCALE), (HEIGHT * GameScreen.SCALE)  , null);
+		g2.drawImage(image, 0, 0,(WIDTH * GameScreen.SCALE), (HEIGHT * GameScreen.SCALE), null);
 		g2.dispose();
 	}
 	

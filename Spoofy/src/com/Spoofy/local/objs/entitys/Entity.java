@@ -3,14 +3,16 @@ package com.Spoofy.local.objs.entitys;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.lang.annotation.AnnotationTypeMismatchException;
 
 import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.gfx.Animation;
 import com.Spoofy.local.Core.gfx.mapping.TileMap;
+import com.Spoofy.local.Utils.Utills;
 import com.Spoofy.local.Utils.Vector2F;
 import com.Spoofy.local.objs.GameObject;
 
-public class Entity extends GameObject{
+public abstract class Entity extends GameObject{
 
 	
 	public static final int STILL_ANI = -0x0;
@@ -33,7 +35,7 @@ public class Entity extends GameObject{
     protected double maxJumpSpeed;
     protected double fallSpeed;
     protected double maxFallSpeed;
-	
+    
 	public Entity(Handler handler, Animation ani, int x, int y, int width, int height, TileMap tm,Dimension collision) {
 		super(handler, ani, x, y, width, height, tm);
 		this.collision = collision;
@@ -46,9 +48,12 @@ public class Entity extends GameObject{
 		if(left) {
 			faceingRight = false;
 			direction.x -= moveSpeed;
+			
+		
 			setCurrentAni((MOVE_LEFT_ANI));
 			if(direction.x < -maxMoveSpeed) {
 				direction.x = -maxMoveSpeed;
+				
 			}
 		}
 		else if(right) {
@@ -57,11 +62,15 @@ public class Entity extends GameObject{
 			setCurrentAni((MOVE_RIGHT_ANI));
 			if(direction.x > maxMoveSpeed) {
 				direction.x = maxMoveSpeed;
+
 			}
 		}
 		else {
 			if(direction.x > 0) {
 				direction.x -= stopSpeed;
+				
+			
+				
 				setCurrentAni((STOP_LEFT_ANI));
 				if(direction.x < 0) {
 					direction.x = 0;
@@ -78,10 +87,14 @@ public class Entity extends GameObject{
 
 		// jumping
 		if(jumping && !falling) {
-			direction.y = jumpSpeed;
-			setCurrentAni((JUMP_ANI));
-			falling = true;	
+				setCurrentAni((JUMP_ANI));
+					direction.y = jumpSpeed;
+					falling = true;
+			
 		}
+		
+		
+		
 		
 		// falling
 		if(falling) {
@@ -102,21 +115,23 @@ public class Entity extends GameObject{
 		if(direction.x == 0 && direction.y == 0 && !falling && !jumping && !right && !left){
 			 setCurrentAni((STILL_ANI));
 		}
+		
+		
 	}
 
 	public void tick(float delta) {
 		super.tick(delta);
-		checkMapCollision();
 		getNextPosition();
-		setPosition(new Vector2F(xtemp, ytemp));
+		checkMapCollision();
+		setPosition(xtemp,ytemp);
 	}
 		
 	public void draw(Graphics2D g) {
-		//setMapPosition();
+		setMapPosition();
 		if(faceingRight){
 			g.drawImage(animation.getCurrentFrame().getImage(), (int) (position.x + mapPos.x - dimention.width / 2), (int) (position.y + mapPos.y - dimention.height / 2),null);
 		}else{
-			g.drawImage(animation.getCurrentFrame().getImage(), (int) (position.x + mapPos.x - dimention.width / 2  + dimention.width)  , (int) (position.y + mapPos.y - dimention.height / 2),-dimention.width,dimention.height,null);
+			g.drawImage(animation.getCurrentFrame().getImage(), (int) (position.x + mapPos.x - dimention.width / 2  + dimention.width)  , (int) (position.y + mapPos.y - dimention.height / 2), -dimention.width, dimention.height,null);
 		}
 	}
 	

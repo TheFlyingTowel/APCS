@@ -17,7 +17,7 @@ public class GameScreen extends JPanel{
 	public static final int SCALE = 2;
 	
 	public GameScreen(KeyListener k) {
-		setPreferredSize(new Dimension(Game.WIDTH, Game.HEIGHT));
+		setPreferredSize(new Dimension(Game.WIDTH , Game.HEIGHT ));
 		setFocusable(true);
 		requestFocus();
 		addKeyListener(k);

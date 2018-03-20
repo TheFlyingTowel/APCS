@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 
 import com.Spoofy.local.Core.Game;
+import com.Spoofy.local.Utils.Utills;
 import com.Spoofy.local.Utils.Vector2F;
 
 public class TileMap {
@@ -32,8 +33,8 @@ public class TileMap {
 	
 	public TileMap(int tileSize) {
 		this.tileSize = tileSize;
-		rowsToDraw = Game.WIDTH / tileSize + 2;
-		colsToDraw = Game.HEIGHT / tileSize + 2;
+		rowsToDraw = Game.HEIGHT / tileSize + 2;
+		colsToDraw = Game.WIDTH / tileSize + 2;
 		tween = 0.07;
 		position = new Vector2F();
 		min = new Vector2F();
@@ -126,19 +127,32 @@ public class TileMap {
 	
 	
 	public void setPosition(double x, double y) {
-		position.x += (x - position.x) * tween;
-		position.y += (y - position.y) * tween;
+		
+
+		
+		this.position.x += (x - position.x) * tween;
+		this.position.y += (y - position.y) * tween;
+		
+
+		
 		fixedBounds();
 		
-		colOffset = (int) -position.x / tileSize;
-		rowOffset = (int) -position.y / tileSize;
+		colOffset = (int) -this.position.x / tileSize;
+		rowOffset = (int) -this.position.y / tileSize;
 	}
 	
     private void fixedBounds(){
-        if(position.x < min.x) position.x = min.x;
+    	
+    	
+    	position.x = Utills.clamp(position.x, min.x, max.x);
+    	position.y = Utills.clamp(position.y, min.y, max.y);
+    	
+    	if(position.y  >= (height)) position.y = height;
+    	
+        /*if(position.x < min.x) position.x = min.x;
         if(position.x > max.x) position.x = max.x;
         if(position.y < min.y) position.y = min.y;
-        if(position.y > max.y) position.y = max.y;
+        if(position.y > max.y) position.y = max.y;*/
     }
 	
 	

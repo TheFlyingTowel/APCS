@@ -73,6 +73,11 @@ public class Vector2F {
 		this.y = v.y;
 	}
 	
+	public void setVector(double x, double y){
+		this.x = x;
+		this.y = y;
+	}
+	
 	public boolean equal(Vector2F v) 
 	{
 		return (this.x == v.x && this.y == v.y);

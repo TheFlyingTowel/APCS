@@ -6,7 +6,7 @@ public class Tile {
 	public static final int NORMAL = 0xA1, BLOCKED = 0xA2;
 	
 	private BufferedImage image;
-	private int type;
+	private final int type;
 	
 	public Tile(BufferedImage image, int type) {
 		this.image = image;

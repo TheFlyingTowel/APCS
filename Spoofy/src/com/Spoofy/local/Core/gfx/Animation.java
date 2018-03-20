@@ -6,19 +6,23 @@ public class Animation {
 
 	private int index;
 	float speed;
-	private long lastTime, timer;
+	private long delay, startTime;
 	private Sprite[] frames;
 	private boolean hasPlayed = false;
 	
-	public Animation(Sprite[] frames,float speed) {
+	public Animation(Sprite[] frames,long delay) {
+	
 		this.frames = frames;
+		this.delay = delay;
+		
+		/*	this.frames = frames;
 		this.speed = speed;
 		timer = 0;
-		lastTime = System.currentTimeMillis();
+		lastTime = System.currentTimeMillis();*/
 	}
 	
 	public void tick() {
-		timer += System.currentTimeMillis() - lastTime;
+	/*	timer += System.currentTimeMillis() - lastTime;
 		lastTime = System.currentTimeMillis();
 		
 		if((timer / speed) > speed) {
@@ -28,7 +32,27 @@ public class Animation {
 				index = 0;
 				hasPlayed = true;
 			}
+		}*/
+		
+		
+		
+		
+		
+		if(delay == -1) return;
+		long elapsed = (System.nanoTime() - startTime) / 1000000;
+		if(elapsed > delay) {
+			index++;
+			startTime = System.nanoTime();
 		}
+		if(index == frames.length) {
+			index = 0;
+			hasPlayed = true;
+		}
+		
+		
+		
+		
+		
 	}
 	
 	
@@ -48,12 +72,27 @@ public class Animation {
 		this.index = Utills.clamp(index, 0, frames.length);
 	}
 	
+	public int getIndex() {
+		return index;
+	}
+	
 	public void setFrames(Sprite[] frames) {
 		this.frames = frames;
+		index = 0;
+		startTime = System.nanoTime();
+		hasPlayed = false;
 	}
 	
 	public boolean hasPlayed() {
 		return hasPlayed;
+	}
+
+	public long getDelay() {
+		return delay;
+	}
+
+	public void setDelay(long delay) {
+		this.delay = delay;
 	}
 	
 }

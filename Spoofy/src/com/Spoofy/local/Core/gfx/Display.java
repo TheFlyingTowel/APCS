@@ -33,8 +33,8 @@ public class Display extends JFrame{
 		setResizable(false);
 		setVisible(true);
 		screen = new GameScreen(kl);
-		screen.setPreferredSize(new Dimension(Game.WIDTH * GameScreen.SCALE, Game.HEIGHT * GameScreen.SCALE));
 		setContentPane(screen);
+		addKeyListener(kl);
 		screen.addKeyListener(kl);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		screen.requestFocus();

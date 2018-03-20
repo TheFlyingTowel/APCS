@@ -22,31 +22,31 @@ public class GameState extends State{
 
 	@Override
 	public void init() {
-		bg = new Background(handler, "/Background/grassbg1.png", 0.5);
+		bg = new Background(handler, "/Background/BKG01.png", 0.5);
 		bg.setPosition(new Vector2F());
-		bg.setDirection(new Vector2F());
-		tileMap = new TileMap(30);
-		tileMap.loadTiles("/Tiles_Sets/grasstileset.png");
-		tileMap.loadMap("/Maps/level1-1.map");
+		bg.setDirection(new Vector2F(-0.5,0));
+		
+		tileMap = new TileMap(32);
+		tileMap.loadTiles("/Tiles_Sets/TilesetV2.png");
+		tileMap.loadMap("/Maps/DemoV2.map");
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(0.1);
-		player = new Player(handler, 64, 64, 68, 68, tileMap, new Dimension(16, 59));
+		player = new Player(handler, 0, 0, 52, 73, tileMap, new Dimension(32, 58));
 		player.init();
+		tileMap.setTween(0.5);
 	}
 
 	@Override
 	public void tick(float delta) {
 		
-		if(handler.getKeyInput().isUp())System.out.println("UP");
-		
-		bg.tick();		
+
 		player.setUp(handler.getKeyInput().isUp());
 		player.setJumping(handler.getKeyInput().isUp());
 		player.setLeft(handler.getKeyInput().isLeft());
 		player.setRight(handler.getKeyInput().isRight());
-		player.tick(delta);
-		tileMap.setPosition((Game.WIDTH / 6) - player.getPosition().x,(Game.HEIGHT / 6) - player.getPosition().y);
-		
+		player.tick(delta);		
+		tileMap.setPosition((Game.WIDTH / 4) - player.getPosition().x,(Game.HEIGHT / 3) - player.getPosition().y);
+		bg.tick();
 	}
 
 	@Override

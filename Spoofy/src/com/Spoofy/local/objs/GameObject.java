@@ -11,7 +11,7 @@ import com.Spoofy.local.Core.gfx.mapping.Tile;
 import com.Spoofy.local.Core.gfx.mapping.TileMap;
 import com.Spoofy.local.Utils.Vector2F;
 
-public class GameObject {
+public abstract class GameObject {
 
 	protected Vector2F position, direction, mapPos;
 	protected Dimension dimention, collision;
@@ -40,6 +40,7 @@ public class GameObject {
 		tileSize = tm.getTileSize();
 		direction = new Vector2F();
 		mapPos = new Vector2F();
+		
 	}
 	
 	public GameObject (Handler handler, Sprite spr, int x, int y, int width, int height,TileMap tm) {
@@ -51,6 +52,7 @@ public class GameObject {
 		tileSize = tm.getTileSize();
 		direction = new Vector2F();
 		mapPos = new Vector2F();
+		
 	}
 	
 	public GameObject (Handler handler, Animation ani, int x, int y, int width, int height,TileMap tm) {
@@ -62,6 +64,7 @@ public class GameObject {
 		tileSize = tm.getTileSize();
 		direction = new Vector2F();
 		mapPos = new Vector2F();
+		
 	}
 	
 	public void tick(float delta) {
@@ -83,7 +86,7 @@ public class GameObject {
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle((int)position.x - collision.width,(int) position.y - collision.height, collision.width, collision.height);
+		return new Rectangle((int) (position.x - (collision.width)),(int) (position.y - (collision.height)), collision.width, collision.height);
 	}
 	
 	
@@ -107,16 +110,16 @@ public class GameObject {
 	}
 	   
 	public void checkMapCollision(){
-	     currCol = (int) position.x / tileSize;
-	     currRow = (int) position.y / tileSize;
+	     currCol = (int) (position.x ) / tileSize;
+	     currRow = (int) (position.y ) / tileSize;
 	       
-	     xdest = position.x + direction.x;
-	     ydest = position.y + direction.y;
+	     xdest = position.x  + direction.x;
+	     ydest = position.y  + direction.y;
 	       
 	       
 	       
-	     xtemp = position.x;
-	     ytemp = position.y;
+	     xtemp = position.x ;
+	     ytemp = position.y ;
 	     calculateCorners(position.x,ydest);
 	       
 	     if(direction.y < 0){
@@ -172,6 +175,8 @@ public class GameObject {
 	       
 	   }
 	   
+	
+
 	//////////////////////////////////////////////////////////////////////////////////
 	   public void setUp(boolean a){up = a;}
 	   public void setDown(boolean a){down = a;}
@@ -202,9 +207,13 @@ public class GameObject {
 	public void setAnimation(Animation animation) {
 		this.animation = animation;
 	}
+	
+	public void setFrames(Sprite[] frames) {
+		animation.setFrames(frames);
+	}
 
-	public void setPosition(Vector2F pos) {
-		position = pos;
+	public void setPosition(double x, double y) {
+		position.setVector(x, y);
 	}
 	
 	public Dimension getCollision() {
