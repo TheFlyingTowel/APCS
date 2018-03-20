@@ -86,20 +86,22 @@ public class Player extends Entity{
 					
 			case MOVE_LEFT_ANI:
 				g.drawString("Current Animation: "+"MOVE_LEFT     ----->>"+ currentAni, 0, 32);
-				if(!jumping && !falling) {
-					animation.setIndex(0);
+				//if(!jumping && !falling && animation.hasPlayed()) {
+					//animation.setIndex(0);
+				if(animation.hasPlayed())
 					animation.setFrames(walkSet);
-					animation.setDelay(100);
-				}
+					animation.setDelay(10);
+				
 				break;
 				
 			case MOVE_RIGHT_ANI:
 				g.drawString("Current Animation: "+"MOVE_RIGHT     ----->>"+ currentAni, 0, 32);
-				if(!jumping && !falling) {
-					animation.setIndex(0);
+				//if(!jumping && !falling && animation.hasPlayed()) {
+					//animation.setIndex(0);
+				if(animation.hasPlayed())
 					animation.setFrames(walkSet);
-					animation.setDelay(100);
-				}
+					animation.setDelay(10);
+				
 				break;
 					
 					
