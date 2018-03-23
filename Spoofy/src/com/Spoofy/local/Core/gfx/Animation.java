@@ -38,7 +38,7 @@ public class Animation {
 		
 		
 		
-		/*if(delay == -1) return;
+		if(delay == -1) return;
 		long elapsed = (System.nanoTime() - startTime) / 1000000;
 		if(elapsed > delay) {
 			index++;
@@ -47,7 +47,7 @@ public class Animation {
 		if(index == frames.length) {
 			index = 0;
 			hasPlayed = true;
-		}*/
+		}
 		
 		
 		
@@ -69,7 +69,7 @@ public class Animation {
 	}
 	
 	public void setIndex(int index) {
-		this.index = Utills.clamp(index, 0, frames.length);
+		this.index = Utills.clamp(index, 0, frames.length - 1);
 	}
 	
 	public int getIndex() {

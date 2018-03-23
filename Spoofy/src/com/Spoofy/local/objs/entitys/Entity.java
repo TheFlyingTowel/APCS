@@ -1,15 +1,10 @@
 package com.Spoofy.local.objs.entitys;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.lang.annotation.AnnotationTypeMismatchException;
-
 import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.gfx.Animation;
 import com.Spoofy.local.Core.gfx.mapping.TileMap;
-import com.Spoofy.local.Utils.Utills;
-import com.Spoofy.local.Utils.Vector2F;
 import com.Spoofy.local.objs.GameObject;
 
 public abstract class Entity extends GameObject{
@@ -20,11 +15,15 @@ public abstract class Entity extends GameObject{
 	public static final int FALL_ANI = 0x2FF;
 	public static final int MOVE_LEFT_ANI = 0x3FF;
 	public static final int MOVE_RIGHT_ANI = 0x4FF;
-	public static final int SHOOT_ANI = 0x5FF;
+	public static final int ATTACK_ANI = 0x5FF;
 	public static final int STOP_LEFT_ANI = 0x6FF;
 	public static final int STOP_RIGHT_ANI = 0x7FF;
 	
 	protected int currentAni = STILL_ANI;
+	
+	//
+	protected int health;
+	protected int power;
 	
     //movement attributes
     protected double moveSpeed;
@@ -49,8 +48,14 @@ public abstract class Entity extends GameObject{
 			faceingRight = false;
 			direction.x -= moveSpeed;
 			
-		
-			setCurrentAni((MOVE_LEFT_ANI));
+			if(jumping) {
+				currentAni = JUMP_ANI;
+			}else
+			if(falling) {
+				currentAni = FALL_ANI;
+			}else {
+				setCurrentAni((MOVE_LEFT_ANI));
+			}
 			if(direction.x < -maxMoveSpeed) {
 				direction.x = -maxMoveSpeed;
 				
@@ -59,7 +64,14 @@ public abstract class Entity extends GameObject{
 		else if(right) {
 			faceingRight = true;
 			direction.x += moveSpeed;
-			setCurrentAni((MOVE_RIGHT_ANI));
+			if(jumping) {
+				currentAni = JUMP_ANI;
+			}else
+			if(falling) {
+				currentAni = FALL_ANI;
+			}else {
+				setCurrentAni((MOVE_RIGHT_ANI));
+			}
 			if(direction.x > maxMoveSpeed) {
 				direction.x = maxMoveSpeed;
 
@@ -71,14 +83,28 @@ public abstract class Entity extends GameObject{
 				
 			
 				
-				setCurrentAni((STOP_LEFT_ANI));
+				if(jumping) {
+					currentAni = JUMP_ANI;
+				}else
+				if(falling) {
+					currentAni = FALL_ANI;
+				}else {
+					setCurrentAni((MOVE_LEFT_ANI));
+				}
 				if(direction.x < 0) {
 					direction.x = 0;
 				}
 			}
 			else if(direction.x < 0) {
 				direction.x += stopSpeed;
-				setCurrentAni((STOP_RIGHT_ANI));
+				if(jumping) {
+					currentAni = JUMP_ANI;
+				}else
+				if(falling) {
+					currentAni = FALL_ANI;
+				}else {
+					setCurrentAni((MOVE_RIGHT_ANI));
+				}
 				if(direction.x > 0) {
 					direction.x = 0;
 				}
@@ -93,7 +119,11 @@ public abstract class Entity extends GameObject{
 			
 		}
 		
-		
+		if(this.getClass() == Player.class) {
+			if(!falling && currentAni == FALL_ANI) {
+				animation.setIndex(6);
+			}
+		}
 		
 		
 		// falling
@@ -119,11 +149,12 @@ public abstract class Entity extends GameObject{
 		
 	}
 
-	public void tick(float delta) {
+	public void tick(double delta) {
 		super.tick(delta);
 		getNextPosition();
 		checkMapCollision();
 		setPosition(xtemp,ytemp);
+		
 	}
 		
 	public void draw(Graphics2D g) {
@@ -223,6 +254,16 @@ public abstract class Entity extends GameObject{
 
 	public void setMaxFallSpeed(double maxFallSpeed) {
 		this.maxFallSpeed = maxFallSpeed;
+	}
+
+
+	public int getHealth() {
+		return health;
+	}
+
+
+	public void setHealth(int health) {
+		this.health = health;
 	}
 	
 	

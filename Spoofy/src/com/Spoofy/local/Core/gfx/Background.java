@@ -35,6 +35,11 @@ public class Background {
 		position = new Vector2F((pos.x * moveScale) % Game.WIDTH,(pos.y * moveScale) % Game.HEIGHT);
 	}
 	
+	public void setPosition(double x,double y) {
+		position.setVector((x * moveScale) % Game.WIDTH,(y * moveScale) % Game.HEIGHT);
+	}
+	
+	
 	public void setDirection(Vector2F dir) {
 		this.direction = dir;
 	}
@@ -55,10 +60,10 @@ public class Background {
 		//X
 		g.drawImage(img, (int)position.x, (int)position.y,Game.WIDTH / GameScreen.SCALE,Game.HEIGHT / GameScreen.SCALE,null);
 		if(position.x < 0){
-			g.drawImage(img, ((int)position.x + Game.WIDTH / GameScreen.SCALE ),(int) position.y,Game.WIDTH / GameScreen.SCALE,Game.HEIGHT / GameScreen.SCALE ,null);
+			g.drawImage(img, ((int)position.x + (Game.WIDTH / GameScreen.SCALE )),(int) position.y,Game.WIDTH / GameScreen.SCALE,Game.HEIGHT / GameScreen.SCALE ,null);
 		}
 		if(position.x > 0){
-			g.drawImage(img, (int)position.x - Game.WIDTH  / GameScreen.SCALE,(int) position.y, Game.WIDTH / GameScreen.SCALE,Game.HEIGHT / GameScreen.SCALE,null);
+			g.drawImage(img, (int)position.x - (Game.WIDTH  / GameScreen.SCALE),(int) position.y, Game.WIDTH / GameScreen.SCALE,Game.HEIGHT / GameScreen.SCALE,null);
 		}
 		
 		//Y
@@ -74,19 +79,21 @@ public class Background {
 		
 		//X
 		if( position.x > (Game.WIDTH / GameScreen.SCALE)){
-			setPosition(new Vector2F(-(Game.WIDTH / GameScreen.SCALE), 0));
+			
+			setPosition(-(Game.WIDTH / GameScreen.SCALE), 0);
 		}
-		if( position.x < -(Game.WIDTH + img.getWidth())){
-			setPosition(new Vector2F(Game.WIDTH + img.getWidth(), 0));
+		if( position.x < -(Game.WIDTH / GameScreen.SCALE)){
+			
+			setPosition(Game.WIDTH / GameScreen.SCALE, 0);
 		}
 		
 		//Y
 		if(position.y > (Game.HEIGHT / GameScreen.SCALE)) {
-			setPosition(new Vector2F(0, -(Game.HEIGHT / GameScreen.SCALE)));
+			setPosition(0, -(Game.HEIGHT / GameScreen.SCALE));
 		}
 		
 		if(position.y < -(Game.HEIGHT / GameScreen.SCALE)) {
-			setPosition(new Vector2F(0, (Game.HEIGHT / GameScreen.SCALE)));
+			setPosition(0, (Game.HEIGHT / GameScreen.SCALE));
 		}
 		
 		

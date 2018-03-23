@@ -1,6 +1,5 @@
 package com.Spoofy.local.Core;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -11,7 +10,6 @@ import com.Spoofy.local.Core.gfx.Display;
 import com.Spoofy.local.Core.gfx.GameScreen;
 import com.Spoofy.local.States.State;
 import com.Spoofy.local.States.GameState;
-import com.Spoofy.local.States.StartState;
 import com.Spoofy.local.Utils.Debug;
 import com.Spoofy.local.Utils.Debugger;
 import com.Spoofy.local.input.KeyboardInput;
@@ -71,8 +69,8 @@ public class Game implements Runnable {
 		
 		MainDebug.mDraw(g);// Must always be drawn last
 		
-		g.setColor(Color.BLUE);
-		g.drawString("FPS: "+fps, 2, 10);
+		//g.setColor(Color.BLUE);
+		//g.drawString("FPS: "+fps, 2, 10);
 		g2.drawImage(image, 0, 0,(WIDTH * GameScreen.SCALE), (HEIGHT * GameScreen.SCALE), null);
 		g2.dispose();
 	}

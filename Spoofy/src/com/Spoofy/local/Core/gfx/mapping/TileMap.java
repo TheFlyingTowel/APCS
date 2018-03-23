@@ -147,7 +147,7 @@ public class TileMap {
     	position.x = Utills.clamp(position.x, min.x, max.x);
     	position.y = Utills.clamp(position.y, min.y, max.y);
     	
-    	if(position.y  >= (height)) position.y = height;
+    	//if(position.y  >= (height)) position.y = height;
     	
         /*if(position.x < min.x) position.x = min.x;
         if(position.x > max.x) position.x = max.x;

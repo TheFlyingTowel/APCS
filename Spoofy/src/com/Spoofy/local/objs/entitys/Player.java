@@ -8,6 +8,7 @@ import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.gfx.Animation;
 import com.Spoofy.local.Core.gfx.Sprite;
 import com.Spoofy.local.Core.gfx.mapping.TileMap;
+import com.Spoofy.local.Utils.Debugger;
 
 
 public class Player extends Entity{
@@ -16,12 +17,15 @@ public class Player extends Entity{
 	Sprite[] jumpSet;
 	Sprite[] walkSet;
 	Sprite[] stillSet;
+	Sprite[] lastAnimation;
 	long d = 100;
+	
+	
 	
 	
 	public Player(Handler handler,int x,int y,int width,int height, TileMap tm, Dimension collision) {
 		super(handler, new Animation(null,5), x, y, width, height, tm, collision);
-
+		setCollisionPosition(0, 16);
 	}
 	
 	
@@ -31,6 +35,10 @@ public class Player extends Entity{
 		stillSet = new Sprite[3];
 		walkSet = new Sprite[6];
 		jumpSet = new Sprite[7];
+		
+		debug = new Debugger(handler);
+		debug.init();
+		debug.addDebugText("Position");
 		
 		int width = 52;
 		int height  = 73;
@@ -57,7 +65,7 @@ public class Player extends Entity{
 		stopJumpSpeed = 0.3;
 	}
 	
-	public void tick(float delta){
+	public void tick(double delta){
 		super.tick(delta);
 		
 	}
@@ -73,6 +81,7 @@ public class Player extends Entity{
 				animation.setIndex(4);
 				animation.setFrames(jumpSet);
 				animation.setIndex(4);
+				lastAnimation = jumpSet;
 				break;
 				
 			case FALL_ANI:
@@ -81,34 +90,47 @@ public class Player extends Entity{
 					animation.setIndex(5);
 					animation.setFrames(jumpSet);
 					animation.setIndex(5);
+					lastAnimation = jumpSet;
 				
 				break;
 					
 			case MOVE_LEFT_ANI:
+				if(jumping)currentAni = JUMP_ANI;
+				if(falling)currentAni = FALL_ANI;
 				g.drawString("Current Animation: "+"MOVE_LEFT     ----->>"+ currentAni, 0, 32);
-				//if(!jumping && !falling && animation.hasPlayed()) {
-					//animation.setIndex(0);
-				if(animation.hasPlayed())
+				if(!jumping && !falling && animation.hasPlayed()) {
+					//animation.setIndex(0);				
 					animation.setFrames(walkSet);
-					animation.setDelay(10);
-				
+					animation.setDelay(100);
+					lastAnimation = walkSet;
+				}
 				break;
 				
 			case MOVE_RIGHT_ANI:
+				if(jumping)currentAni = JUMP_ANI;
+				if(falling)currentAni = FALL_ANI;
 				g.drawString("Current Animation: "+"MOVE_RIGHT     ----->>"+ currentAni, 0, 32);
-				//if(!jumping && !falling && animation.hasPlayed()) {
+				if(!jumping && !falling && animation.hasPlayed()) {
 					//animation.setIndex(0);
-				if(animation.hasPlayed())
 					animation.setFrames(walkSet);
-					animation.setDelay(10);
-				
+					animation.setDelay(100);
+					lastAnimation = walkSet;
+				}
 				break;
 					
 					
 			case STILL_ANI:
 				g.drawString("Current Animation: "+"IDLE     ----->>"+ currentAni, 0, 32);
 				if(!jumping && !falling)
-					animation.setFrames(stillSet);
+					if(lastAnimation == stillSet) {
+						if(animation.hasPlayed()) {
+							animation.setFrames(stillSet);
+							lastAnimation = stillSet;
+						}
+					}else {
+						animation.setFrames(stillSet);
+						lastAnimation = stillSet;
+					}
 				break;
 					
 			default:
@@ -116,9 +138,11 @@ public class Player extends Entity{
 				
 			}
 				
+				debug.upDateText("Position", "Position("+position.x+" , "+position.y+")");
+		
 				//Collision box
-				//g.setColor(Color.RED);
-				//g.fillRect((int)((position.x + mapPos.x - collision.width / 2)), (int)((position.y + mapPos.y - collision.height / 2)), collision.width, collision.height);
+				g.setColor(Color.RED);
+				g.fillRect((int)(((position.x) + mapPos.x - collision.width / 2)), (int)(((position.y) + mapPos.y - collision.height / 2)), collision.width, collision.height);
 				
 	}
 

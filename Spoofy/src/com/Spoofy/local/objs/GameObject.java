@@ -9,11 +9,13 @@ import com.Spoofy.local.Core.gfx.Animation;
 import com.Spoofy.local.Core.gfx.Sprite;
 import com.Spoofy.local.Core.gfx.mapping.Tile;
 import com.Spoofy.local.Core.gfx.mapping.TileMap;
+import com.Spoofy.local.Utils.Debugger;
 import com.Spoofy.local.Utils.Vector2F;
 
 public abstract class GameObject {
 
 	protected Vector2F position, direction, mapPos;
+	protected int cx = 0,cy = 0;
 	protected Dimension dimention, collision;
 	protected Sprite sprite;
 	protected Animation animation;
@@ -22,7 +24,7 @@ public abstract class GameObject {
 	protected TileMap tm;
 	protected boolean faceingRight;
 	protected int tileSize;
-	
+	protected Debugger debug;
     //movement
     protected boolean up,down,left,right,jumping,falling;
 	
@@ -52,12 +54,11 @@ public abstract class GameObject {
 		tileSize = tm.getTileSize();
 		direction = new Vector2F();
 		mapPos = new Vector2F();
-		
 	}
 	
-	public GameObject (Handler handler, Animation ani, int x, int y, int width, int height,TileMap tm) {
+	public GameObject (Handler handler, Animation animation, int x, int y, int width, int height,TileMap tm) {
 		this.handler = handler;
-		animation = ani;
+		this.animation = animation;
 		position = new Vector2F(x, y);
 		dimention = new Dimension(width, height);
 		this.tm = tm;
@@ -67,7 +68,7 @@ public abstract class GameObject {
 		
 	}
 	
-	public void tick(float delta) {
+	public void tick(double delta) {
 		if(animation != null)animation.tick();
 	}
 	
@@ -86,7 +87,7 @@ public abstract class GameObject {
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle((int) (position.x - (collision.width)),(int) (position.y - (collision.height)), collision.width, collision.height);
+		return new Rectangle((int) ((position.x) - (collision.width)),(int) ((position.y) - (collision.height)), collision.width, collision.height);
 	}
 	
 	
@@ -110,11 +111,11 @@ public abstract class GameObject {
 	}
 	   
 	public void checkMapCollision(){
-	     currCol = (int) (position.x ) / tileSize;
-	     currRow = (int) (position.y ) / tileSize;
+	     currCol = (int) position.x / tileSize;
+	     currRow = (int) position.y / tileSize;
 	       
-	     xdest = position.x  + direction.x;
-	     ydest = position.y  + direction.y;
+	     xdest = (position.x)  + direction.x;
+	     ydest = (position.y)  + direction.y;
 	       
 	       
 	       
@@ -137,7 +138,7 @@ public abstract class GameObject {
 	           if(bottomLeft || bottomRight){   
 	        	   direction.y = 0;
 	               falling = false;
-	               ytemp = (currRow + 1) * tileSize - collision.height / 2;
+	               ytemp = (currRow + 2) * tileSize - collision.height / 2;
 	           }else{
 	               ytemp += direction.y;
 	           }
@@ -164,7 +165,7 @@ public abstract class GameObject {
 	       }
 	       
 	       if(!falling){
-	           calculateCorners(position.x, ydest + 1);
+	           calculateCorners(position.x, ydest + 2);
 	           if(!bottomLeft && !bottomRight){
 	               falling = true;
 	           }
@@ -193,7 +194,7 @@ public abstract class GameObject {
 	//////////////////////////////////////////////////////////////////////////////////
 	
 	public boolean isOnscreen() {
-		return(position.x + mapPos.x + dimention.width < 0 ||
+		return(	position.x + mapPos.x + dimention.width < 0 ||
 				position.x + mapPos.x - dimention.width > handler.getGameImage().getWidth() ||
 				position.y + mapPos.y + dimention.height < 0 ||
 				position.y + mapPos.y - dimention.height > handler.getGameImage().getWidth()
@@ -249,5 +250,9 @@ public abstract class GameObject {
 		return dimention;
 	}
 	
+	public void setCollisionPosition(int x, int y) {
+		this.cx = x;
+		this.cy = y;
+	}
 	
 }

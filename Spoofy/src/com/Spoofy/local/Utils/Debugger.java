@@ -41,7 +41,7 @@ public class Debugger extends Debug {
 				break;
 			case VER:
 				g.setFont(new Font("sans", Font.PLAIN, 9));
-				g.setColor(Color.white);
+				g.setColor(Color.BLACK);
 				g.drawString(text.get(i), 4, (i * 10) + 10);
 				break;
 				
