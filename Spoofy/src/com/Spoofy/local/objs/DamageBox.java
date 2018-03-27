@@ -7,19 +7,20 @@ import java.awt.Graphics2D;
 import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.gfx.mapping.TileMap;
 import com.Spoofy.local.Utils.Vector2F;
+import com.Spoofy.local.objs.entitys.Creature;
 import com.Spoofy.local.objs.entitys.Entity;
 
 public class DamageBox extends GameObject{
 	
 	private int power = 0;
-	private Entity entity;
+	private Creature creature;
 	private boolean hasHit = false;
 	
 	
-	public DamageBox(Handler handler,Entity e, TileMap tm,int power,int x, int y,int w, int h) {
+	public DamageBox(Handler handler,Creature c, TileMap tm,int power,int x, int y,int w, int h) {
 		super(handler,tm);
 		this.power = power;
-		this.entity = e;
+		this.creature = c;
 		this.position = new Vector2F(x, y);
 		this.collision = new Dimension(w, h);
 	}
@@ -30,8 +31,8 @@ public class DamageBox extends GameObject{
 	}
 	
 	public void hitDetection() {
-		hasHit = this.collisionWithOther(entity);
-		if(hasHit) entity.setHealth(entity.getHealth() - power);
+		hasHit = this.collisionWithOther(creature);
+		if(hasHit) creature.setHealth(creature.getHealth() - power);
 	}
 	
 	public boolean isHitting() {

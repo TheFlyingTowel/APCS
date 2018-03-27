@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import com.Spoofy.local.Handler;
+import com.Spoofy.local.Core.Game;
 import com.Spoofy.local.Core.gfx.Animation;
 import com.Spoofy.local.Core.gfx.Sprite;
 import com.Spoofy.local.Core.gfx.mapping.Tile;
@@ -37,13 +38,15 @@ public abstract class GameObject {
 		this.handler = handler;
 		position = new Vector2F();
 		dimention = new Dimension();
-		sprite = new Sprite(new BufferedImage(0, 0, BufferedImage.TYPE_INT_RGB));
+		sprite = null;
 		this.tm = tm;
 		tileSize = tm.getTileSize();
 		direction = new Vector2F();
 		mapPos = new Vector2F();
 		
 	}
+	
+	
 	
 	public GameObject (Handler handler, Sprite spr, int x, int y, int width, int height,TileMap tm) {
 		this.handler = handler;
@@ -70,6 +73,9 @@ public abstract class GameObject {
 	
 	public void tick(double delta) {
 		if(animation != null)animation.tick();
+		checkMapCollision();
+		setMapPosition();
+		setPosition(xtemp, ytemp);
 	}
 	
 	
@@ -87,7 +93,7 @@ public abstract class GameObject {
 	}
 	
 	public Rectangle getBounds() {
-		return new Rectangle((int) ((position.x) - (collision.width)),(int) ((position.y) - (collision.height)), collision.width, collision.height);
+		return new Rectangle((int) ((position.x)),(int) ((position.y)), collision.width, collision.height);
 	}
 	
 	
@@ -126,7 +132,7 @@ public abstract class GameObject {
 	     if(direction.y < 0){
 	         if(topLeft || topRight){
 	      	   direction.y = 0;
-	           ytemp = currRow * tileSize  + collision.height/ 2;
+	           ytemp = (currRow * tileSize - 32)  + collision.height/ 2;
 	         }else {
 	           ytemp += direction.y;
 	           
@@ -148,7 +154,7 @@ public abstract class GameObject {
 	       if(direction.x < 0){
 	           if(topLeft || bottomLeft){
 	        	   direction.x = 0;
-	               xtemp = currCol * tileSize + collision.width / 2;
+	               xtemp = (currCol * tileSize) + collision.width / 2;
 	           }else{
 	               xtemp += direction.x;
 	           }
@@ -157,7 +163,7 @@ public abstract class GameObject {
 	       if(direction.x > 0){
 	           if(topRight || bottomRight){
 	        	   direction.x = 0;
-	               xtemp = (currCol + 1) * tileSize - collision.width /2;
+	               xtemp = (currCol + 1.016099) * tileSize - collision.width / 2;
 	           }else{
 	               xtemp += direction.x;
 	           }
@@ -193,11 +199,11 @@ public abstract class GameObject {
 	   public boolean isFalling(){return falling;}
 	//////////////////////////////////////////////////////////////////////////////////
 	
-	public boolean isOnscreen() {
+	public boolean isOFFscreen() {
 		return(	position.x + mapPos.x + dimention.width < 0 ||
-				position.x + mapPos.x - dimention.width > handler.getGameImage().getWidth() ||
+				position.x + mapPos.x - dimention.width > Game.WIDTH ||
 				position.y + mapPos.y + dimention.height < 0 ||
-				position.y + mapPos.y - dimention.height > handler.getGameImage().getWidth()
+				position.y + mapPos.y - dimention.height > Game.HEIGHT
 				);
 	}
 	      
@@ -253,6 +259,18 @@ public abstract class GameObject {
 	public void setCollisionPosition(int x, int y) {
 		this.cx = x;
 		this.cy = y;
+	}
+
+
+
+	public Debugger getDebug() {
+		return debug;
+	}
+
+
+
+	public void setDebug(Debugger debug) {
+		this.debug = debug;
 	}
 	
 }

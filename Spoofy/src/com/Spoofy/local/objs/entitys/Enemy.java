@@ -8,7 +8,7 @@ import com.Spoofy.local.Core.gfx.Animation;
 import com.Spoofy.local.Core.gfx.mapping.TileMap;
 import com.Spoofy.local.objs.DamageBox;
 
-public class Enemy extends Entity{
+public class Enemy extends Creature{
 
 	Player player;
 	DamageBox attack;

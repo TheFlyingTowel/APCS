@@ -9,9 +9,11 @@ import com.Spoofy.local.Core.gfx.Animation;
 import com.Spoofy.local.Core.gfx.Sprite;
 import com.Spoofy.local.Core.gfx.mapping.TileMap;
 import com.Spoofy.local.Utils.Debugger;
+import com.Spoofy.local.Utils.Vector2F;
+import com.Spoofy.local.objs.KillZone;
 
 
-public class Player extends Entity{
+public class Player extends Creature{
 
 	
 	Sprite[] jumpSet;
@@ -19,13 +21,14 @@ public class Player extends Entity{
 	Sprite[] stillSet;
 	Sprite[] lastAnimation;
 	long d = 100;
-	
+	private Vector2F lastPoint;
 	
 	
 	
 	public Player(Handler handler,int x,int y,int width,int height, TileMap tm, Dimension collision) {
 		super(handler, new Animation(null,5), x, y, width, height, tm, collision);
 		setCollisionPosition(0, 16);
+		
 	}
 	
 	
@@ -38,7 +41,8 @@ public class Player extends Entity{
 		
 		debug = new Debugger(handler);
 		debug.init();
-		debug.addDebugText("Position");
+		debug.addDebugText("Player-Position");
+		debug.addDebugText("KillZone-Position");
 		
 		int width = 52;
 		int height  = 73;
@@ -57,17 +61,22 @@ public class Player extends Entity{
 		
 		
 		moveSpeed = 0.3;
-		maxMoveSpeed = 2.6;
+		maxMoveSpeed = 5.6;
 		stopSpeed = 0.4;
 		fallSpeed = 0.15;
 		maxFallSpeed = 4.0;
 		jumpSpeed = -5.8;
 		stopJumpSpeed = 0.3;
+		lastPoint = new Vector2F(position.x,position.y);
 	}
 	
 	public void tick(double delta){
 		super.tick(delta);
 		
+		if(!isAlive) {
+			position.setVector(lastPoint.x, lastPoint.y);
+			isAlive = true;
+		}
 	}
 	
 	
@@ -138,16 +147,27 @@ public class Player extends Entity{
 				
 			}
 				
-				debug.upDateText("Position", "Position("+position.x+" , "+position.y+")");
-		
+				debug.upDateText("Player-Position", "Player-Position("+(position.x + mapPos.x - collision.width / 2)+" , "+(position.y + mapPos.y - collision.height / 2)+")");
+				
 				//Collision box
-				g.setColor(Color.RED);
-				g.fillRect((int)(((position.x) + mapPos.x - collision.width / 2)), (int)(((position.y) + mapPos.y - collision.height / 2)), collision.width, collision.height);
+				//g.setColor(Color.RED);
+				//g.fillRect((int)(((position.x) + mapPos.x - collision.width / 2)), (int)(((position.y) + mapPos.y - collision.height / 2)), collision.width, collision.height);
 				
 	}
 
 
+	public Vector2F getLastPoint() {
+		return lastPoint;
+	}
 
+
+	public void setLastPoint(Vector2F lastPoint) {
+		this.lastPoint = lastPoint;
+	}
+
+
+
+	
 	
 
 }

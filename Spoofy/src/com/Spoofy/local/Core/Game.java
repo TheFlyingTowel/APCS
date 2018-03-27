@@ -1,5 +1,6 @@
 package com.Spoofy.local.Core;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -64,11 +65,16 @@ public class Game implements Runnable {
 		//To screen
 		Graphics g2 = display.getScreen().getGraphics();
 		
+		
+		
+		
 		state.draw(g);
 		
 		
 		MainDebug.mDraw(g);// Must always be drawn last
 		
+		g.setColor(Color.YELLOW);
+		g.drawString("FPS: "+fps, 8, 48);
 		//g.setColor(Color.BLUE);
 		//g.drawString("FPS: "+fps, 2, 10);
 		g2.drawImage(image, 0, 0,(WIDTH * GameScreen.SCALE), (HEIGHT * GameScreen.SCALE), null);

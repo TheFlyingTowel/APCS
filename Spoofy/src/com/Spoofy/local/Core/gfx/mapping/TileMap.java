@@ -30,6 +30,9 @@ public class TileMap {
 	private Tile[][] tiles;
 	
 	private int rowOffset, colOffset,rowsToDraw, colsToDraw;
+	private char[] objSymbols = new char[]{'~','`','!','#','@','$','^','&'};
+	
+	
 	
 	public TileMap(int tileSize) {
 		this.tileSize = tileSize;
@@ -137,22 +140,16 @@ public class TileMap {
 		
 		fixedBounds();
 		
-		colOffset = (int) -this.position.x / tileSize;
-		rowOffset = (int) -this.position.y / tileSize;
+		colOffset = (int) -(this.position.x / tileSize);
+		rowOffset = (int) -(this.position.y / tileSize);
 	}
 	
     private void fixedBounds(){
     	
-    	
-    	position.x = Utills.clamp(position.x, min.x, max.x);
-    	position.y = Utills.clamp(position.y, min.y, max.y);
-    	
-    	//if(position.y  >= (height)) position.y = height;
-    	
-        /*if(position.x < min.x) position.x = min.x;
+        if(position.x < min.x) position.x = min.x;
         if(position.x > max.x) position.x = max.x;
         if(position.y < min.y) position.y = min.y;
-        if(position.y > max.y) position.y = max.y;*/
+        if(position.y > max.y) position.y = max.y;
     }
 	
 	

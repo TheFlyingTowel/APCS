@@ -2,13 +2,18 @@ package com.Spoofy.local.objs.entitys;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+
 import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.gfx.Animation;
+import com.Spoofy.local.Core.gfx.Sprite;
 import com.Spoofy.local.Core.gfx.mapping.TileMap;
 import com.Spoofy.local.objs.GameObject;
 
 public abstract class Entity extends GameObject{
 
+	
+	public static final ArrayList<Entity> ENTITIES = new ArrayList<Entity>();
 	
 	public static final int STILL_ANI = -0x0;
 	public static final int JUMP_ANI = 0x1FF;
@@ -22,8 +27,7 @@ public abstract class Entity extends GameObject{
 	protected int currentAni = STILL_ANI;
 	
 	//
-	protected int health;
-	protected int power;
+	
 	
     //movement attributes
     protected double moveSpeed;
@@ -38,8 +42,14 @@ public abstract class Entity extends GameObject{
 	public Entity(Handler handler, Animation ani, int x, int y, int width, int height, TileMap tm,Dimension collision) {
 		super(handler, ani, x, y, width, height, tm);
 		this.collision = collision;
+		ENTITIES.add(this);
 	}
 
+	public Entity(Handler handler, Sprite spr, int x, int y, int width, int height, TileMap tm,Dimension collision) {
+		super(handler, spr, x, y, width, height, tm);
+		this.collision = collision;
+		ENTITIES.add(this);
+	}
 	
 	private void getNextPosition() {
 		
@@ -152,17 +162,16 @@ public abstract class Entity extends GameObject{
 	public void tick(double delta) {
 		super.tick(delta);
 		getNextPosition();
-		checkMapCollision();
-		setPosition(xtemp,ytemp);
 		
 	}
 		
 	public void draw(Graphics2D g) {
-		setMapPosition();
-		if(faceingRight){
-			g.drawImage(animation.getCurrentFrame().getImage(), (int) (position.x + mapPos.x - dimention.width / 2), (int) (position.y + mapPos.y - dimention.height / 2),null);
-		}else{
-			g.drawImage(animation.getCurrentFrame().getImage(), (int) (position.x + mapPos.x - dimention.width / 2  + dimention.width)  , (int) (position.y + mapPos.y - dimention.height / 2), -dimention.width, dimention.height,null);
+		if(!isOFFscreen()) {
+			if(faceingRight){
+				g.drawImage(animation.getCurrentFrame().getImage(), (int) (position.x + mapPos.x - dimention.width / 2), (int) (position.y + mapPos.y - dimention.height / 2),null);
+			}else{
+				g.drawImage(animation.getCurrentFrame().getImage(), (int) (position.x + mapPos.x - dimention.width / 2  + dimention.width)  , (int) (position.y + mapPos.y - dimention.height / 2), -dimention.width, dimention.height,null);
+			}
 		}
 	}
 	
@@ -257,14 +266,6 @@ public abstract class Entity extends GameObject{
 	}
 
 
-	public int getHealth() {
-		return health;
-	}
-
-
-	public void setHealth(int health) {
-		this.health = health;
-	}
 	
 	
 	
