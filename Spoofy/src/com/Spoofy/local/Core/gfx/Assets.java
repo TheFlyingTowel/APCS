@@ -7,11 +7,13 @@ import javax.imageio.ImageIO;
 
 public class Assets {
 
+	
+	//Animations
 	public static BufferedImage[] lava;
 	public static BufferedImage[] lavaTop;
 	public static BufferedImage[] waterTop;
 	public static BufferedImage[] water;
-	
+	//Animations
 	
 	
 	public void init() {

@@ -81,7 +81,7 @@ public class Game implements Runnable {
 		g.drawString("FPS: "+fps, 8, 48);
 		//g.setColor(Color.BLUE);
 		//g.drawString("FPS: "+fps, 2, 10);
-		g2.drawImage(image, 0, 0,(WIDTH * GameScreen.SCALE), (HEIGHT * GameScreen.SCALE), null);
+		g2.drawImage(image, 0, 0,(WIDTH), (HEIGHT), null);
 		g2.dispose();
 	}
 	
