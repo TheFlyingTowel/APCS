@@ -158,10 +158,10 @@ public class Player extends Creature{
 				
 				
 				g.setColor(Color.RED);
-				g.fillRect(4, 64, 64, 16);
+				g.fillRect(4, 64, 64, 8);
 				
 				g.setColor(Color.GREEN);
-				g.fillRect(4, 64,(int) (64 * (health / maxHealth)), 16);
+				g.fillRect(4, 64,(int) (64 * (health / maxHealth)), 8);
 				
 				
 				g.setColor(new Color(21, 255, 0));
