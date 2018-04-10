@@ -38,11 +38,7 @@ public class Player extends Creature{
 		stillSet = new Sprite[3];
 		walkSet = new Sprite[6];
 		jumpSet = new Sprite[7];
-		
-		debug = new Debugger(handler);
-		debug.init();
-		debug.addDebugText("Player-Position");
-		debug.addDebugText("KillZone-Position");
+
 		
 		int width = 52;
 		int height  = 73;
@@ -68,6 +64,8 @@ public class Player extends Creature{
 		jumpSpeed = -5.8;
 		stopJumpSpeed = 0.3;
 		lastPoint = new Vector2F(position.x,position.y);
+		health = 10;
+		maxHealth = 10;
 	}
 	
 	public void tick(double delta){
@@ -76,16 +74,17 @@ public class Player extends Creature{
 		if(!isAlive) {
 			position.setVector(lastPoint.x, lastPoint.y);
 			isAlive = true;
+			health = 5;
 		}
 	}
 	
 	
 	public void draw(Graphics2D g) {
 		super.draw(g);
-		g.setColor(Color.ORANGE);
+		g.setColor(new Color(211, 255, 124));
 		switch (currentAni) {
 			case JUMP_ANI:
-				g.drawString("Current Animation: "+"JUMPING     ----->>"+ currentAni, 0, 32);
+				g.drawString("Current Animation: "+"JUMPING     ----->>"+ currentAni, 8, 32);
 				//if(animation.hasPlayed())
 				animation.setIndex(4);
 				animation.setFrames(jumpSet);
@@ -94,7 +93,7 @@ public class Player extends Creature{
 				break;
 				
 			case FALL_ANI:
-				g.drawString("Current Animation: "+"FALLING     ----->>"+ currentAni, 0, 32);
+				g.drawString("Current Animation: "+"FALLING     ----->>"+ currentAni, 8, 32);
 				//if(animation.hasPlayed())
 					animation.setIndex(5);
 					animation.setFrames(jumpSet);
@@ -106,7 +105,7 @@ public class Player extends Creature{
 			case MOVE_LEFT_ANI:
 				if(jumping)currentAni = JUMP_ANI;
 				if(falling)currentAni = FALL_ANI;
-				g.drawString("Current Animation: "+"MOVE_LEFT     ----->>"+ currentAni, 0, 32);
+				g.drawString("Current Animation: "+"MOVE_LEFT     ----->>"+ currentAni, 8, 32);
 				if(!jumping && !falling && animation.hasPlayed()) {
 					//animation.setIndex(0);				
 					animation.setFrames(walkSet);
@@ -118,7 +117,7 @@ public class Player extends Creature{
 			case MOVE_RIGHT_ANI:
 				if(jumping)currentAni = JUMP_ANI;
 				if(falling)currentAni = FALL_ANI;
-				g.drawString("Current Animation: "+"MOVE_RIGHT     ----->>"+ currentAni, 0, 32);
+				g.drawString("Current Animation: "+"MOVE_RIGHT     ----->>"+ currentAni, 8, 32);
 				if(!jumping && !falling && animation.hasPlayed()) {
 					//animation.setIndex(0);
 					animation.setFrames(walkSet);
@@ -129,7 +128,7 @@ public class Player extends Creature{
 					
 					
 			case STILL_ANI:
-				g.drawString("Current Animation: "+"IDLE     ----->>"+ currentAni, 0, 32);
+				g.drawString("Current Animation: "+"IDLE     ----->>"+ currentAni, 8, 32);
 				if(!jumping && !falling)
 					if(lastAnimation == stillSet) {
 						if(animation.hasPlayed()) {
@@ -147,12 +146,26 @@ public class Player extends Creature{
 				
 			}
 				
-				debug.upDateText("Player-Position", "Player-Position("+(position.x + mapPos.x - collision.width / 2)+" , "+(position.y + mapPos.y - collision.height / 2)+")");
-				
 				//Collision box
 				//g.setColor(Color.RED);
 				//g.fillRect((int)(((position.x) + mapPos.x - collision.width / 2)), (int)(((position.y) + mapPos.y - collision.height / 2)), collision.width, collision.height);
+				g.setColor(new Color(240, 76, 255));
+				g.drawString("Player: "+position.x + ", "+position.y, 8, 16);
 				
+				String healthDat = "Health: "+health;
+				
+				
+				
+				
+				g.setColor(Color.RED);
+				g.fillRect(4, 64, 64, 16);
+				
+				g.setColor(Color.GREEN);
+				g.fillRect(4, 64,(int) (64 * (health / maxHealth)), 16);
+				
+				
+				g.setColor(new Color(21, 255, 0));
+
 	}
 
 

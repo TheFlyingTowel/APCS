@@ -1,6 +1,8 @@
 package com.Spoofy.local.objs;
 
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
@@ -65,7 +67,7 @@ public abstract class GameObject {
 		position = new Vector2F(x, y);
 		dimention = new Dimension(width, height);
 		this.tm = tm;
-		tileSize = tm.getTileSize();
+		tileSize = (tm != null) ? tm.getTileSize() : 0;
 		direction = new Vector2F();
 		mapPos = new Vector2F();
 		
@@ -78,7 +80,14 @@ public abstract class GameObject {
 		setPosition(xtemp, ytemp);
 	}
 	
-	
+	public void draw(Graphics2D g) {
+		if(sprite != null) {
+			g.drawImage(sprite.getImage(),(int)(position.x + mapPos.x),(int) (position.y + mapPos.y ),(int) collision.width,(int) collision.height,null);
+		}else {
+			g.setColor(Color.GREEN);
+			g.fillRect(((int)((position.x + mapPos.x - collision.width / 2))), (int)((position.y + mapPos.y - collision.height / 2)), collision.width, collision.height);
+		}
+	}
 	
 	public void setMapPosition() {
 		mapPos.copy(tm.getPosition());
@@ -271,6 +280,22 @@ public abstract class GameObject {
 
 	public void setDebug(Debugger debug) {
 		this.debug = debug;
+	}
+
+
+
+	public double getXtemp() {
+		return xtemp;
+	}
+
+
+
+	public double getYtemp() {
+		return ytemp;
+	}
+
+	public Handler getHandler() {
+		return handler;
 	}
 	
 }

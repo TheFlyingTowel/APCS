@@ -1,6 +1,7 @@
 package com.Spoofy.local.objs.entitys;
 
 import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.util.ArrayList;
 
 import com.Spoofy.local.Handler;
@@ -11,7 +12,8 @@ public class Creature extends Entity{
 
 	public static final ArrayList<Creature> CREATURES = new ArrayList<Creature>();
 	
-	protected int health;
+	protected float health;
+	protected float maxHealth;
 	protected int power;
 	protected boolean isAlive = true;
 	
@@ -24,14 +26,22 @@ public class Creature extends Entity{
 
 	public void tick(double delta) {
 		super.tick(delta);
+		if(health <= 0) {
+			setAlive(false);
+		}
 	}
 	
-	public int getHealth() {
+	
+	public void draw(Graphics2D g) {
+		super.draw(g);
+	}
+	
+	public float getHealth() {
 		return health;
 	}
 
 
-	public void setHealth(int health) {
+	public void setHealth(float health) {
 		this.health = health;
 	}
 
@@ -43,6 +53,18 @@ public class Creature extends Entity{
 
 	public void setAlive(boolean isAlive) {
 		this.isAlive = isAlive;
+	}
+
+
+
+	public float getMaxHealth() {
+		return maxHealth;
+	}
+
+
+
+	public void setMaxHealth(float maxHealth) {
+		this.maxHealth = maxHealth;
 	}
 	
 

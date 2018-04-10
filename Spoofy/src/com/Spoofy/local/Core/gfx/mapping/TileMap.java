@@ -1,17 +1,27 @@
 package com.Spoofy.local.Core.gfx.mapping;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
 import com.Spoofy.local.Core.Game;
+import com.Spoofy.local.Core.gfx.Animation;
+import com.Spoofy.local.Core.gfx.Assets;
+import com.Spoofy.local.Core.gfx.Sprite;
 import com.Spoofy.local.Utils.Utills;
 import com.Spoofy.local.Utils.Vector2F;
+import com.Spoofy.local.objs.GameObject;
+import com.Spoofy.local.objs.KillZone;
+import com.Spoofy.local.objs.Lava;
+import com.Spoofy.local.objs.MapObjID;
+import com.Spoofy.local.objs.entitys.CheckPoint;
 
 public class TileMap {
 
@@ -30,9 +40,12 @@ public class TileMap {
 	private Tile[][] tiles;
 	
 	private int rowOffset, colOffset,rowsToDraw, colsToDraw;
-	private char[] objSymbols = new char[]{'~','`','!','#','@','$','^','&'};
-	
-	
+	private char[] objSymbols = new char[]{'A','a','B','b','C','c','D','d','E','e','F','f','G','g','H','h','I','i','J','j',
+										   'K','k','L','l','M','m','N','n','O','o','P','p','Q','q','R','r','S','s','T','t'
+										   ,'U','u','V','v','W','w','X','x','Y','y','Z','z','~','`','!','#','@','$','^','&',
+										   '(',')','-','+','='};
+	private ArrayList<Class<?>> LEVELOBJS = new ArrayList<>();
+	private ArrayList<MapObjID> OBJS = new ArrayList<MapObjID>();
 	
 	public TileMap(int tileSize) {
 		this.tileSize = tileSize;
@@ -84,17 +97,63 @@ public class TileMap {
 			min.y = Game.HEIGHT - height;
 			max.x = 0;
 			max.y = 0;
-			
+			String lastLine = "";
 			for(int row = 0; row < rows; row++) {
 				String line = br.readLine();
 				String[] tokens = line.split("\\s+");
+				String[] lastTokens = lastLine.split("\\s+");
 				for(int col = 0; col < cols; col++) {
+					
+					for(int i = 0; i < objSymbols.length; i++) { 
+						if(tokens[col].contentEquals(Character.toString(objSymbols[i]))) {
+							
+							if(!LEVELOBJS.isEmpty()) {
+								
+								GameObject obj = null;
+								try {
+									if(LEVELOBJS.get(i) == CheckPoint.class) {
+										obj = new CheckPoint(null, null, 0, 0, tileSize, tileSize, this);
+									}else if (LEVELOBJS.get(i) == KillZone.class) {
+										obj = new KillZone(null, this, 0, 0, new Dimension(tileSize, tileSize));
+									}else if (LEVELOBJS.get(i) == Lava.class) {
+										Sprite[] lava;
+										if(!lastTokens[col].contentEquals(Character.toString(objSymbols[i]))){
+											lava = new Sprite[Assets.lavaTop.length];
+											for(int z = 0; z < Assets.lavaTop.length; z++)lava[z] = new Sprite(Assets.lavaTop[z]);
+										}else {
+											lava = new Sprite[Assets.lava.length];
+											for(int z = 0; z < Assets.lava.length; z++)lava[z] = new Sprite(Assets.lava[z]);
+										}
+										obj  = new Lava(null, new Animation(lava, 150), 0, 0, 32, 32, this);
+									}//Add GameObject classes here
+								}catch(Exception e) {
+									e.printStackTrace();
+								}
+								
+								MapObjID id = new MapObjID(objSymbols[i], obj);
+								id.setLocation(col, row);
+								id.getObj().setMapPosition();
+								id.getObj().setPosition((position.x + col * tileSize),(position.y + row * tileSize));	
+								OBJS.add(id);
+							}
+							tokens[col] = "0";
+						}
+						
+					}
 					map[row][col] = Integer.parseInt(tokens[col]);
 				}
+				lastLine = line;
 			}
 			
 		}catch(IOException e) {
 			System.err.println("ERROR: "+e.getMessage());
+		}
+	}
+	
+
+	public void tick(double delta) {
+		for(MapObjID m : OBJS) {
+			m.getObj().tick(delta);
 		}
 	}
 	
@@ -114,6 +173,12 @@ public class TileMap {
 				g.drawImage(tiles[r][c].getImage(), (int)position.x + col * tileSize, (int) position.y + row * tileSize, null);
 			}
 		}
+		
+		
+		for(MapObjID m : OBJS) {
+			m.getObj().draw(g);
+		}
+		
 	}
 	
 	
@@ -156,6 +221,12 @@ public class TileMap {
     
     
     
+    
+    public void setMapOBJS(Class<?>...gameObjects ) {
+    	for(int i = 0; i < gameObjects.length; i++) {
+    		LEVELOBJS.add(gameObjects[i]);
+    	}
+    }
     
 	public double getTween() {
 		return tween;

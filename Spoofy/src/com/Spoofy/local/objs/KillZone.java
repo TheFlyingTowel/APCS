@@ -29,6 +29,7 @@ public class KillZone extends GameObject{
 	
 
 	public void draw(Graphics2D g) {
+		super.draw(g);
 		g.setColor(Color.BLUE);
 		g.drawString("{KillZone}isOnScreen() = "+(!isOFFscreen()), 8, 200);
 		if(!isOFFscreen()) {

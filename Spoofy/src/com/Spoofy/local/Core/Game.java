@@ -7,6 +7,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
 import com.Spoofy.local.Handler;
+import com.Spoofy.local.Core.gfx.Assets;
 import com.Spoofy.local.Core.gfx.Display;
 import com.Spoofy.local.Core.gfx.GameScreen;
 import com.Spoofy.local.States.State;
@@ -23,17 +24,20 @@ public class Game implements Runnable {
 	private Thread thread;
 	private boolean isRunning = false;
 	private int fps = 0;
-	private int FPS = 60;//Target FPS
+	private int FPS = 120;//Target FPS
 	private Display display;
 	private KeyboardInput keyInput;
 	private BufferedImage image;
 	private Graphics2D g;
 	private State state;
 	private Debug MainDebug;
+	private Assets asstes;
 	
 	void init()
 	{
 		//Initialize 
+		asstes = new Assets();
+		asstes.init();
 		Handler handler = new Handler(this);
 		keyInput = new KeyboardInput();
 		MainDebug = new Debugger(handler);
@@ -127,6 +131,7 @@ public class Game implements Runnable {
 		if(isRunning) return;
 			isRunning = true;
 			thread = new Thread(this);
+			thread.setName("Game-Thread");
 			thread.start();
 		
 	}
