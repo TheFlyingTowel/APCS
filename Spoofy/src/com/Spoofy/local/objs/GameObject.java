@@ -23,7 +23,7 @@ public abstract class GameObject {
 	protected boolean solid = false;
 	protected Handler handler;
 	protected TileMap tm;
-	protected boolean faceingRight;
+	protected boolean faceingRight = true;
 	protected int tileSize;
 	protected Debugger debug;
     //movement

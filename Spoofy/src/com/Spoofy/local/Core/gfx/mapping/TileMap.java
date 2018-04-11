@@ -134,7 +134,7 @@ public class TileMap {
 		
 								if(obj!= null) {
 									obj.setMapPosition();
-									obj.setPosition((position.x + col * tileSize),(position.y + row * tileSize));	
+									obj.setPosition(( position.x + col * tileSize),(position.y + row * tileSize));	
 									OBJS.add(obj);
 								}
 							}

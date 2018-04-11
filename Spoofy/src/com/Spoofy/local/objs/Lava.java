@@ -34,7 +34,8 @@ public class Lava extends GameObject{
 
 	
 	public void draw(Graphics2D g) {
-		super.draw(g);
+		g.drawImage(animation.getCurrentFrame().getImage(),(int) (position.x + mapPos.x),(int) (position.y + mapPos.y), dimention.width, dimention.height, null);
+	
 	}
 	
 	public Lava copy(Lava l) {

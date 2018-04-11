@@ -18,7 +18,7 @@ public class Optimizer implements Runnable{
 		while(isRunning) {
 
 			
-			if(game.getFPS() < 50) {
+			if(game.getFPS() < 30) {
 				System.out.println("Hitt: "+hits);
 				if(hits > 5) {
 					lastTarget += 30;
@@ -42,7 +42,7 @@ public class Optimizer implements Runnable{
 			
 			///////////////////
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(250);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
