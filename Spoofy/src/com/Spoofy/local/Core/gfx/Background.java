@@ -1,7 +1,6 @@
 package com.Spoofy.local.Core.gfx;
 
-import java.awt.Color;
-import java.awt.Font;
+
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -29,10 +28,12 @@ public class Background {
 			System.err.println("Could not load background: -> \n"+e.getMessage());
 		}
 		
+		position = new Vector2F();
+		direction = new Vector2F();
 	}
 	
 	public void setPosition(Vector2F pos) {
-		position = new Vector2F((pos.x * moveScale) % Game.WIDTH,(pos.y * moveScale) % Game.HEIGHT);
+		position.setVector((pos.x * moveScale) % Game.WIDTH,(pos.y * moveScale) % Game.HEIGHT);
 	}
 	
 	public void setPosition(double x,double y) {
@@ -41,18 +42,15 @@ public class Background {
 	
 	
 	public void setDirection(Vector2F dir) {
-		this.direction = dir;
+		direction.setVector(dir.x, dir.y);
 	}
 	
 	
 	
 	
 	public void tick() {
-		position.x += (direction.x % Game.WIDTH) * moveScale;
-		position.y += (direction.y % Game.HEIGHT) * moveScale;
-		//position.add(direction.mod(new Vectors2F(Game.WIDTH,Game.HEIGHT).multi(moveScale)));
-		//position.add(direction);
-		
+		position.x += ((direction.x % Game.WIDTH) * moveScale);
+		position.y += ((direction.y % Game.HEIGHT) * moveScale);
 	}
 	
 	public void draw(Graphics2D g) {

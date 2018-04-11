@@ -7,11 +7,8 @@ import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.Game;
 import com.Spoofy.local.Core.gfx.Background;
 import com.Spoofy.local.Core.gfx.mapping.TileMap;
-import com.Spoofy.local.Utils.Debugger;
 import com.Spoofy.local.Utils.Vector2F;
 import com.Spoofy.local.objs.KillZone;
-import com.Spoofy.local.objs.Lava;
-import com.Spoofy.local.objs.entitys.CheckPoint;
 import com.Spoofy.local.objs.entitys.Player;
 
 public class GameState extends State{
@@ -22,7 +19,6 @@ public class GameState extends State{
 	Background cloud;
 	TileMap tileMap;
 	KillZone killzone;
-	Debugger d;
 	public GameState(Handler handler){
 		super(handler);
 	}
@@ -36,13 +32,13 @@ public class GameState extends State{
 		bg.setDirection(new Vector2F(-0.2,0));
 		cloud.setDirection(new Vector2F(-0.5,0));
 		tileMap = new TileMap(32);
-		tileMap.setMapOBJS(CheckPoint.class,Lava.class);
+		//tileMap.setMapOBJS(CheckPoint.class,NullObj.class);
 		tileMap.loadTiles("/Tiles_Sets/TilesetV2.png");
 		
 		
 		tileMap.loadMap("/Maps/Debug-2.map");
 		tileMap.setPosition(0, 0);
-		tileMap.setTween(0.1);
+		tileMap.setTween(0.01);
 		
 
 		
@@ -53,9 +49,8 @@ public class GameState extends State{
 	}
 
 	@Override
-	public void tick(float delta) {
+	public void tick(double delta) {
 		
-		double lastTemp = player.getXtemp();
 		player.setUp(handler.getKeyInput().isUp());
 		player.setJumping(handler.getKeyInput().isUp());
 		player.setLeft(handler.getKeyInput().isLeft());
@@ -84,7 +79,6 @@ public class GameState extends State{
 		cloud.draw(g);
 		tileMap.draw(g);
 		player.draw(g);
-		//killzone.draw(g);
 		
 		
 		

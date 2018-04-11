@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 
 import com.Spoofy.local.Core.Game;
 import com.Spoofy.local.Core.gfx.GameScreen;
-import com.Spoofy.local.Utils.Debug;
 import com.Spoofy.local.input.KeyboardInput;
 
 
@@ -31,11 +30,7 @@ public class Handler {
 	public int getFPS(){
 		return game.getFPS();
 	}
-	
-	public Debug getDebugger() {
-		return game.getDebugger();
-	}
-	
+
 
 	
 }

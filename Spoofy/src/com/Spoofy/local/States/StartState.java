@@ -25,7 +25,7 @@ public class StartState extends State{
 	}
 
 	@Override
-	public void tick(float delta) {
+	public void tick(double delta) {
 		bg.tick();
 		cloud.tick();
 

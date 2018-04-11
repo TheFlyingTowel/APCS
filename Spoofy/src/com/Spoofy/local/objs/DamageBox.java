@@ -8,7 +8,6 @@ import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.gfx.mapping.TileMap;
 import com.Spoofy.local.Utils.Vector2F;
 import com.Spoofy.local.objs.entitys.Creature;
-import com.Spoofy.local.objs.entitys.Entity;
 
 public class DamageBox extends GameObject{
 	

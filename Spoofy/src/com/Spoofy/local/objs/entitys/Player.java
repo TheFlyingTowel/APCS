@@ -8,9 +8,7 @@ import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.gfx.Animation;
 import com.Spoofy.local.Core.gfx.Sprite;
 import com.Spoofy.local.Core.gfx.mapping.TileMap;
-import com.Spoofy.local.Utils.Debugger;
 import com.Spoofy.local.Utils.Vector2F;
-import com.Spoofy.local.objs.KillZone;
 
 
 public class Player extends Creature{
@@ -22,6 +20,8 @@ public class Player extends Creature{
 	Sprite[] lastAnimation;
 	long d = 100;
 	private Vector2F lastPoint;
+	
+	public static boolean isMoving = false;
 	
 	
 	
@@ -57,10 +57,10 @@ public class Player extends Creature{
 		
 		
 		moveSpeed = 0.3;
-		maxMoveSpeed = 5.6;
+		maxMoveSpeed = 9.6;
 		stopSpeed = 0.4;
 		fallSpeed = 0.15;
-		maxFallSpeed = 4.0;
+		maxFallSpeed = 5.0;
 		jumpSpeed = -5.8;
 		stopJumpSpeed = 0.3;
 		lastPoint = new Vector2F(position.x,position.y);
@@ -70,7 +70,7 @@ public class Player extends Creature{
 	
 	public void tick(double delta){
 		super.tick(delta);
-		
+		isMoving = up || left || right || falling || jumping; 
 		if(!isAlive) {
 			position.setVector(lastPoint.x, lastPoint.y);
 			isAlive = true;
@@ -149,11 +149,9 @@ public class Player extends Creature{
 				//Collision box
 				//g.setColor(Color.RED);
 				//g.fillRect((int)(((position.x) + mapPos.x - collision.width / 2)), (int)(((position.y) + mapPos.y - collision.height / 2)), collision.width, collision.height);
-				g.setColor(new Color(240, 76, 255));
-				g.drawString("Player: "+position.x + ", "+position.y, 8, 16);
+
 				
-				String healthDat = "Health: "+health;
-				
+		
 				
 				
 				

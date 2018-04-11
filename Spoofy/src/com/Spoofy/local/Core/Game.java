@@ -12,8 +12,6 @@ import com.Spoofy.local.Core.gfx.Display;
 import com.Spoofy.local.Core.gfx.GameScreen;
 import com.Spoofy.local.States.State;
 import com.Spoofy.local.States.GameState;
-import com.Spoofy.local.Utils.Debug;
-import com.Spoofy.local.Utils.Debugger;
 import com.Spoofy.local.input.KeyboardInput;
 
 public class Game implements Runnable {
@@ -24,14 +22,16 @@ public class Game implements Runnable {
 	private Thread thread;
 	private boolean isRunning = false;
 	private int fps = 0;
-	private int FPS = 120;//Target FPS
+	public int FPS = 60;//Target FPS
 	private Display display;
 	private KeyboardInput keyInput;
 	private BufferedImage image;
 	private Graphics2D g;
 	private State state;
-	private Debug MainDebug;
 	private Assets asstes;
+	private long targetTime;
+	private Optimizer op;
+	
 	
 	void init()
 	{
@@ -40,8 +40,6 @@ public class Game implements Runnable {
 		asstes.init();
 		Handler handler = new Handler(this);
 		keyInput = new KeyboardInput();
-		MainDebug = new Debugger(handler);
-		MainDebug.mInit();
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 		display = new Display("Spoofy",keyInput);
@@ -60,14 +58,15 @@ public class Game implements Runnable {
 		
 		keyInput.tick();
 		state.tick(delta);
-		MainDebug.mTick(delta);
+
 	}
 	
 	void draw()
 	{
-		//Render
-		//To screen
-		Graphics g2 = display.getScreen().getGraphics();
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
+		
 		
 		
 		
@@ -75,13 +74,11 @@ public class Game implements Runnable {
 		state.draw(g);
 		
 		
-		MainDebug.mDraw(g);// Must always be drawn last
-		
+
+		Graphics g2 = display.getScreen().getGraphics();
 		g.setColor(Color.YELLOW);
 		g.drawString("FPS: "+fps, 8, 48);
-		//g.setColor(Color.BLUE);
-		//g.drawString("FPS: "+fps, 2, 10);
-		g2.drawImage(image, 0, 0,(WIDTH), (HEIGHT), null);
+		g2.drawImage(image, 0, 0,(WIDTH * GameScreen.SCALE), (HEIGHT * GameScreen.SCALE), null);
 		g2.dispose();
 	}
 	
@@ -90,7 +87,7 @@ public class Game implements Runnable {
 		init();
 		fps = FPS;
 		long now = System.nanoTime();
-		long targetTime = 1000000000 / FPS;
+		targetTime = 1000000000 / FPS;
 		long loop = now;
 		long fpsTime = 0;
 		float delta = 0;
@@ -124,8 +121,6 @@ public class Game implements Runnable {
 		}
 		
 	}
-
-
 	
 	public synchronized void start() {
 		if(isRunning) return;
@@ -133,6 +128,8 @@ public class Game implements Runnable {
 			thread = new Thread(this);
 			thread.setName("Game-Thread");
 			thread.start();
+			op = new Optimizer(this);
+			op.start();
 		
 	}
 
@@ -162,12 +159,15 @@ public class Game implements Runnable {
 	public int getFPS() {
 		return fps;
 	}
-	public Debug getDebugger() {
-		return MainDebug;
-	}
-	
+
 	public KeyboardInput keys() {
 		return keyInput;
 	}
 	
+	public Thread getThread() {
+		return thread;
+	}
+	public void setTargetTime(long targetTime) {
+		this.targetTime = targetTime;
+	}
 }

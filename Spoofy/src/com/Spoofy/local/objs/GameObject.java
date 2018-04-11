@@ -1,10 +1,8 @@
 package com.Spoofy.local.objs;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
 
 import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.Game;
@@ -48,8 +46,6 @@ public abstract class GameObject {
 		
 	}
 	
-	
-	
 	public GameObject (Handler handler, Sprite spr, int x, int y, int width, int height,TileMap tm) {
 		this.handler = handler;
 		sprite = spr;
@@ -81,11 +77,20 @@ public abstract class GameObject {
 	}
 	
 	public void draw(Graphics2D g) {
-		if(sprite != null) {
-			g.drawImage(sprite.getImage(),(int)(position.x + mapPos.x),(int) (position.y + mapPos.y ),(int) collision.width,(int) collision.height,null);
-		}else {
-			g.setColor(Color.GREEN);
-			g.fillRect(((int)((position.x + mapPos.x - collision.width / 2))), (int)((position.y + mapPos.y - collision.height / 2)), collision.width, collision.height);
+		if(!isOFFscreen()) {
+			if(animation != null) {
+				if(faceingRight){
+					g.drawImage(animation.getCurrentFrame().getImage(), (int) (position.x + mapPos.x - dimention.width / 2), (int) (position.y + mapPos.y - dimention.height / 2),null);
+				}else{
+					g.drawImage(animation.getCurrentFrame().getImage(), (int) (position.x + mapPos.x - dimention.width / 2  + dimention.width)  , (int) (position.y + mapPos.y - dimention.height / 2), -dimention.width, dimention.height,null);
+				}
+			}else if (sprite != null) {
+				if(faceingRight){
+					g.drawImage(sprite.getImage(), (int) (position.x + mapPos.x - dimention.width / 2), (int) (position.y + mapPos.y - dimention.height / 2),null);
+				}else{
+					g.drawImage(sprite.getImage(), (int) (position.x + mapPos.x - dimention.width / 2  + dimention.width)  , (int) (position.y + mapPos.y - dimention.height / 2), -dimention.width, dimention.height,null);
+				}
+			}
 		}
 	}
 	

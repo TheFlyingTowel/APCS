@@ -5,12 +5,10 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import com.Spoofy.local.Utils.Utills;
 
 public class Sprite {
 
 	private BufferedImage sprite;
-	
 	public Sprite(String path) {
 		try {
 			sprite = ImageIO.read(getClass().getResourceAsStream(path));

@@ -16,7 +16,7 @@ public abstract class State {
 	}
 	
 	public abstract void init();
-	public abstract void tick(float delta);
+	public abstract void tick(double delta);
 	public abstract void draw(Graphics2D g);
 	
 	public void setState(State state) {

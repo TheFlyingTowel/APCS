@@ -2,7 +2,6 @@ package com.Spoofy.local.objs;
 
 import java.awt.Dimension;
 import java.awt.Graphics2D;
-import java.util.ArrayList;
 
 import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.gfx.Animation;
@@ -35,7 +34,7 @@ public class Lava extends GameObject{
 
 	
 	public void draw(Graphics2D g) {
-		if(!isOFFscreen()) g.drawImage(animation.getCurrentFrame().getImage(), (int)(position.x + mapPos.x),(int) (position.y + mapPos.y ),(int) collision.width,(int) collision.height,  null);
+		super.draw(g);
 	}
 	
 	public Lava copy(Lava l) {
