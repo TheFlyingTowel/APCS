@@ -11,7 +11,7 @@ public class Optimizer implements Runnable{
 	
 	public void run() {
 		int lastTarget = 60;
-		int hits = 0, count = 0;
+		int hits = 0,highHits = 0, count = 0;
 		
 		System.out.println("Optimizer started");
 		System.out.println("Target: "+lastTarget);
@@ -27,8 +27,16 @@ public class Optimizer implements Runnable{
 					hits = 0;
 				}
 				hits++;
-				
-
+			}
+			
+			if(game.getFPS() > 60) {
+				if(highHits > 5) {
+					lastTarget -= 30;
+					game.setTargetTime(1000000000 / lastTarget);
+					System.out.println("Target Change: "+lastTarget);
+					highHits = 0;
+				}
+				highHits++;
 			}
 			
 			if(count > 20) {
