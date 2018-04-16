@@ -10,6 +10,7 @@ import com.Spoofy.local.Core.gfx.mapping.TileMap;
 import com.Spoofy.local.Utils.Vector2F;
 import com.Spoofy.local.objs.KillZone;
 import com.Spoofy.local.objs.Lava;
+import com.Spoofy.local.objs.NullObj;
 import com.Spoofy.local.objs.entitys.CheckPoint;
 import com.Spoofy.local.objs.entitys.Player;
 
@@ -34,11 +35,11 @@ public class GameState extends State{
 		bg.setDirection(new Vector2F(-0.2,0));
 		cloud.setDirection(new Vector2F(-0.5,0));
 		tileMap = new TileMap(32);
-		tileMap.setMapOBJS(CheckPoint.class,Lava.class);
+		tileMap.setMapOBJS(CheckPoint.class,Lava.class,NullObj.class);
 		tileMap.loadTiles("/Tiles_Sets/TilesetV2.png");
 		
 		
-		tileMap.loadMap("/Maps/Debug-2.map");
+		tileMap.loadMap("/Maps/One.map");
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(0.01);
 		
