@@ -34,18 +34,18 @@ public class GameState extends State{
 		cloud.setPosition(new Vector2F());
 		bg.setDirection(new Vector2F(-0.2,0));
 		cloud.setDirection(new Vector2F(-0.5,0));
-		tileMap = new TileMap(32);
+		tileMap = new TileMap(30);
 		tileMap.setMapOBJS(CheckPoint.class,Lava.class,NullObj.class);
-		tileMap.loadTiles("/Tiles_Sets/TilesetV2.png");
+		tileMap.loadTiles("/Tiles_Sets/grasstileset.png");
 		
 		
-		tileMap.loadMap("/Maps/One.map");
+		tileMap.loadMap("/Maps/level1-1.map");
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(0.01);
 		
 
 		
-		player = new Player(handler, 1034, 1101, 52, 73, tileMap, new Dimension(32, 73));
+		player = new Player(handler, 64, 16, 52, 73, tileMap, new Dimension(32, 73));
 		player.init();
 		tileMap.setTween(0.5);
 		killzone = new KillZone(handler, tileMap, 0, tileMap.getHeight(), new Dimension(tileMap.getWidth(), 32));

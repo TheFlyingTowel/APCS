@@ -16,7 +16,7 @@ import com.Spoofy.local.input.KeyboardInput;
 
 public class Game implements Runnable {
 
-	public static final int WIDTH = 1080, HEIGHT = 720;
+	public static final int WIDTH = 750, HEIGHT = 540;
 	public static final Dimension dimention = new Dimension(WIDTH,HEIGHT);
 	
 	private Thread thread;
