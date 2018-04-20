@@ -28,6 +28,12 @@ public class GameState extends State{
 
 	@Override
 	public void init() {
+		
+		
+		handler.getIO().load("C:\\Users\\APcs12\\git\\APCS\\TEST.txt");
+		
+		
+		
 		bg = new Background(handler, "/Background/BKG03.png", 0.5);
 		cloud = new Background(handler, "/Background/Clouds.png", 1.00005);
 		bg.setPosition(new Vector2F());

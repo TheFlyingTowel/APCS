@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 
-public class Load {
+public class Load extends IO{
 	private String[] buffer;
 	private int size;
 	private Path path;
@@ -28,7 +28,7 @@ public class Load {
 	
 	public void loadInFile(){
 		Charset charset = Charset.forName("US-ASCII");
-		
+		String[] tokens;
 		try(BufferedReader br = Files.newBufferedReader(path,charset)){
 			String line = "";
 			int i = 0;
@@ -45,19 +45,37 @@ public class Load {
 				}
 				
 				if(i < buffer.length) {
-					buffer[i] = line;
+					tokens = line.split("\\s+");
+					if(buffer.length < tokens.length) setSize(tokens.length);
+					for(int j = 0; j < tokens.length; j++) {
+						buffer[i] = tokens[j];
+						i++;
+					}
 				}else {
 					setSize(buffer.length + 1);
-					buffer[i] = line;
+					tokens = line.split("\\s+");
+					if(buffer.length < tokens.length) setSize(tokens.length);
+					for(int j = 0; j < tokens.length; j++) {
+						buffer[i] = tokens[j];
+						i++;
+					}
 				}
 				i++;
 			}
 		}catch(IOException e) {
 			System.err.println(e);
 		}finally {
+			int hash = buffer.hashCode();
 			IO.BUFFER_STREAM.add(buffer);
 			
-			System.out.println("Added buffer to main stream.");
+			for(String[] b : BUFFER_STREAM) {
+				if(b.hashCode() == hash) {
+					hasAdded = true;
+					System.out.println("Added buffer into main stream.");
+				}
+			}
+			
+			
 		}
 	}
 	

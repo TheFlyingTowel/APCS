@@ -11,6 +11,7 @@ import com.Spoofy.local.Core.gfx.Assets;
 import com.Spoofy.local.Core.gfx.Display;
 import com.Spoofy.local.Core.gfx.GameScreen;
 import com.Spoofy.local.States.State;
+import com.Spoofy.local.Utils.GameIO.IO;
 import com.Spoofy.local.States.GameState;
 import com.Spoofy.local.input.KeyboardInput;
 
@@ -31,11 +32,19 @@ public class Game implements Runnable {
 	private Assets asstes;
 	private long targetTime;
 	private Optimizer op;
-	
+	private IO io;
 	
 	void init()
 	{
 		//Initialize 
+		
+		//////////////////////////////
+		io = new IO();
+		io.start();
+		op = new Optimizer(this);
+		op.start();
+		/////////////////////////////
+		
 		asstes = new Assets();
 		asstes.init();
 		Handler handler = new Handler(this);
@@ -126,10 +135,8 @@ public class Game implements Runnable {
 		if(isRunning) return;
 			isRunning = true;
 			thread = new Thread(this);
-			thread.setName("Game-Thread");
+			thread.setName("Game");
 			thread.start();
-			op = new Optimizer(this);
-			op.start();
 		
 	}
 
@@ -170,4 +177,9 @@ public class Game implements Runnable {
 	public void setTargetTime(long targetTime) {
 		this.targetTime = targetTime;
 	}
+	
+	public IO getIO() {
+		return io;
+	}
+	
 }
