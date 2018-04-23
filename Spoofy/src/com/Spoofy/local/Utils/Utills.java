@@ -7,7 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public abstract class Utills {
-
+	
 	//Image loader
 	public static BufferedImage imageLoader(String path){
 		try{
@@ -27,6 +27,15 @@ public abstract class Utills {
 	}
 	
 	
+	//Array counter
+	public static int ArrayItemCount(Object[] a) {
+		int n = 0;
+		for(int i = 0; i < a.length; i++) {
+			if(a[i] != null)n++;
+		}
+		
+		return n;
+	}
 	//clamps
 	public static float clamp(float value, float min ,float max){
 		return(Math.min(Math.max(value, min), Math.max(min, max)));

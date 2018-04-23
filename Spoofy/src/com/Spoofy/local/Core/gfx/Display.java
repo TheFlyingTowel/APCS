@@ -36,7 +36,6 @@ public class Display extends JFrame{
 		setContentPane(screen);
 		addKeyListener(kl);
 		screen.addKeyListener(kl);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		screen.requestFocus();
 		pack();
 		

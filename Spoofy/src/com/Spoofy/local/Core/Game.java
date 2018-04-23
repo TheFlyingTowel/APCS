@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 
 import com.Spoofy.local.Handler;
@@ -38,13 +41,22 @@ public class Game implements Runnable {
 	{
 		//Initialize 
 		
+		WindowListener exit = new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				io.stop();
+				op.stop();
+				stop();
+				System.exit(0);
+			}
+		};
+		
 		//////////////////////////////
 		io = new IO();
 		io.start();
 		op = new Optimizer(this);
 		op.start();
 		/////////////////////////////
-		
 		asstes = new Assets();
 		asstes.init();
 		Handler handler = new Handler(this);
@@ -52,13 +64,10 @@ public class Game implements Runnable {
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
 		display = new Display("Spoofy",keyInput);
+		display.addWindowListener(exit);
 		display.setKeyListener(keyInput);
 		state = new GameState(handler);
 		state.init();
-		
-		
-		
-		
 	}
 	
 	void tick(float delta)
@@ -140,17 +149,17 @@ public class Game implements Runnable {
 		
 	}
 
-	public void stop() {
+	public synchronized void stop() {
 		if(!isRunning)return;
-		boolean er = false;
 		if(thread != null) {
+			isRunning = false;
 			try {
 				thread.join();
 			} catch (InterruptedException e) {
-				System.err.println("ERROR: "+e.getLocalizedMessage());
-				er = true;
+				System.err.println(e);
 			}finally {
-				if(er)thread.interrupt();
+				thread.interrupt();
+				System.out.println("Game closed.");
 			}
 		}
 	}

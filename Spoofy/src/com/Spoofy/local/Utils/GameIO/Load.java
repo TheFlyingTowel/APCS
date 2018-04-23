@@ -7,6 +7,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javax.rmi.CORBA.Util;
+
+import com.Spoofy.local.Utils.Utills;
+
 
 public class Load extends IO{
 	private String[] buffer;
@@ -35,7 +39,7 @@ public class Load extends IO{
 			int lastIndex = 0;
 			while((line = br.readLine()) != null) {
 				
-				for(int n = lastIndex; n < line.length(); n++) {
+				/*for(int n = lastIndex; n < line.length(); n++) {
 					
 					if(n < (line.length() + lastIndex)) {
 						
@@ -43,7 +47,7 @@ public class Load extends IO{
 					
 					lastIndex++;	
 				}
-				
+				*/
 				if(i < buffer.length) {
 					tokens = line.split("\\s+");
 					if(buffer.length < tokens.length) setSize(tokens.length);
@@ -60,22 +64,34 @@ public class Load extends IO{
 						i++;
 					}
 				}
+				
 				i++;
 			}
 		}catch(IOException e) {
 			System.err.println(e);
 		}finally {
+			
+			for(int n = 0; n < buffer.length; n++) {
+				if(buffer[n] == null) {
+					setSize(n);
+					break;
+				}
+			}
+			
 			int hash = buffer.hashCode();
 			IO.BUFFER_STREAM.add(buffer);
+			
+			STREAM_MAP.put("", hash);
 			
 			for(String[] b : BUFFER_STREAM) {
 				if(b.hashCode() == hash) {
 					hasAdded = true;
 					System.out.println("Added buffer into main stream.");
+					break;
 				}
 			}
 			
-			
+			checkAndChange();
 		}
 	}
 	
@@ -87,20 +103,18 @@ public class Load extends IO{
 		return path.toString();
 	}
 	
-	public void setSize(int s){
-		if(s < buffer.length){
-			System.err.println(String.format("Size %s, is less than buffer size: %a",s,buffer.length));
+	public void setSize(int s){		
+		int count  = Utills.ArrayItemCount(buffer);	
+		if(count > s) {
+			System.err.println(String.format("ERROR: Size: %s, is less than Item size: %s", s,count));
 			return;
 		}
-		
-		String[] tmpBuff = new String[size = s];
-		
-		
-		for(int i = 0; i < tmpBuff.length; i++){
+		String[] tmpBuff = new String[size = s];	
+		int len = (buffer.length < tmpBuff.length)? buffer.length : tmpBuff.length;
+		for(int i = 0; i < len; i++){
 			tmpBuff[i] = buffer[i];
 		}
 		buffer = tmpBuff.clone();
-		
 	}
 	public int getSize(){
 		return size;

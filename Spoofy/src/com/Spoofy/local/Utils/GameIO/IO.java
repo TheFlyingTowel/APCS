@@ -1,6 +1,8 @@
 package com.Spoofy.local.Utils.GameIO;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
 
 
 public class IO implements Runnable{
@@ -9,9 +11,9 @@ public class IO implements Runnable{
 	public static final int OUT = 0xEF;
 	public static final int STALL = 0x0;
 	
+	public static final HashMap<String, Integer> STREAM_MAP = new HashMap<String,Integer>();
 	public static final ArrayList<String[]> BUFFER_STREAM = new ArrayList<String[]>();
 	public static int mode = 0x0;
-	
 	protected boolean hasAdded = false;
 	
 	private boolean running = false;
@@ -22,20 +24,25 @@ public class IO implements Runnable{
 	public void run() {
 		System.out.println("IO Stream on.");
 		while(running) {
+			
+			
+			
 			switch(mode) {
 			case IN:
 				Load load = new Load(64,_path);
 				load.loadInFile();
-				checkAndChange();
 				break;
 			case OUT:
 				//Save save = new Save();
 				checkAndChange();
 				break;
 			case STALL:
+				_path = "";
 				break;
 				
 			}
+			
+			try {Thread.sleep(500);} catch (InterruptedException e) {System.err.println(e);}
 		}
 	}
 	
@@ -55,10 +62,10 @@ public class IO implements Runnable{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+		System.out.println("IO stream ended.");
 	}
 	
-	private void checkAndChange() {
+	protected void checkAndChange() {
 		if(hasAdded) {
 			mode = STALL;
 			hasAdded = false;

@@ -46,7 +46,10 @@ public class Optimizer implements Runnable{
 			
 			count++;
 			
-			if(!game.getThread().isAlive()) isRunning = false;
+			if(!game.getThread().isAlive()) {
+				isRunning = false;
+				System.out.println("Optimizer stoped.");
+			}
 			
 			///////////////////
 			try {
@@ -58,7 +61,7 @@ public class Optimizer implements Runnable{
 		}
 	}
 	
-	public void start() {
+	public synchronized void start() {
 		if(isRunning)return;
 		isRunning = true;
 		thread = new Thread(this);
@@ -66,6 +69,17 @@ public class Optimizer implements Runnable{
 		if(thread != null)thread.start();
 	}
 
+	public synchronized void stop() {
+		if(!isRunning()) return;
+		isRunning = false;
+		try {
+			thread.join();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Optimizer stoped.");
+	}
+	
 	
 	public boolean isRunning() {
 		return isRunning;
