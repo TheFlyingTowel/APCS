@@ -30,7 +30,7 @@ public class GameState extends State{
 	public void init() {
 		
 		
-		handler.getIO().load("D:\\Users\\towel\\git\\APCS\\TEST.txt");
+		handler.getIO().load("\\TEST.txt");
 		
 		
 		

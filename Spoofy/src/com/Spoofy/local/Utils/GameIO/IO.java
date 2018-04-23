@@ -73,7 +73,7 @@ public class IO implements Runnable{
 	}
 	
 	public void load(String path) {
-		this._path = path;
+		this._path = IO.class.getResource(path).getFile();
 		mode = IN;
 	}
 }

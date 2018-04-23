@@ -7,7 +7,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import javax.rmi.CORBA.Util;
 
 import com.Spoofy.local.Utils.Utills;
 
@@ -16,16 +15,19 @@ public class Load extends IO{
 	private String[] buffer;
 	private int size;
 	private Path path;
+	private String name;
 	
 	public Load(int size){
 		this.size = size;
 		buffer = new String[size];
+		name = getFileName(path.toString());
 	}
 	
 	public Load(int size, String path){ 
 		this.size = size;
 		buffer = new String[size];
 		this.path = Paths.get(path);
+		name = getFileName(path);
 	}
 	
 	
@@ -36,18 +38,7 @@ public class Load extends IO{
 		try(BufferedReader br = Files.newBufferedReader(path,charset)){
 			String line = "";
 			int i = 0;
-			int lastIndex = 0;
 			while((line = br.readLine()) != null) {
-				
-				/*for(int n = lastIndex; n < line.length(); n++) {
-					
-					if(n < (line.length() + lastIndex)) {
-						
-					}
-					
-					lastIndex++;	
-				}
-				*/
 				if(i < buffer.length) {
 					tokens = line.split("\\s+");
 					if(buffer.length < tokens.length) setSize(tokens.length);
@@ -81,12 +72,12 @@ public class Load extends IO{
 			int hash = buffer.hashCode();
 			IO.BUFFER_STREAM.add(buffer);
 			
-			STREAM_MAP.put("", hash);
+			STREAM_MAP.put(name, hash);
 			
 			for(String[] b : BUFFER_STREAM) {
 				if(b.hashCode() == hash) {
 					hasAdded = true;
-					System.out.println("Added buffer into main stream.");
+					System.out.println(String.format("Added buffer %s into main stream.", name));
 					break;
 				}
 			}
@@ -118,6 +109,34 @@ public class Load extends IO{
 	}
 	public int getSize(){
 		return size;
+	}
+	
+	public String getFileName(String path){
+		int hits = 0;
+		boolean a = false;
+		String result = "";
+		for(int i = 0; i < path.length(); i++){
+			if(path.toCharArray()[i] == '\\'){
+				hits++;
+			}
+		}
+		
+		int hits2 = 0;
+		for(int n = 0; n < path.length(); n++){
+			if(path.toCharArray()[n] == '\\'){
+				hits2++;
+			}
+			if(hits2 == hits){
+				if(!a){
+					a = true;
+					continue;
+				}
+				result += path.toCharArray()[n];
+				
+			}
+		}
+		
+		return result;
 	}
 	
 }
