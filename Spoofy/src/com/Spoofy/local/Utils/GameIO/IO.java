@@ -1,5 +1,6 @@
 package com.Spoofy.local.Utils.GameIO;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,10 +11,9 @@ public class IO implements Runnable{
 	public static final int IN = 0xAF;
 	public static final int OUT = 0xEF;
 	public static final int STALL = 0x0;
+	protected static final HashMap<String, byte[]> BUFFER_STREAM = new HashMap<String,byte[]>();
 	
-	public static final HashMap<String, Integer> STREAM_MAP = new HashMap<String,Integer>();
-	public static final ArrayList<String[]> BUFFER_STREAM = new ArrayList<String[]>();
-	public static int mode = 0x0;
+	private static int mode = 0x0;
 	protected boolean hasAdded = false;
 	
 	private boolean running = false;
@@ -30,7 +30,7 @@ public class IO implements Runnable{
 			switch(mode) {
 			case IN:
 				Load load = new Load(64,_path);
-				load.loadInFile();
+				load.loadBuffer();
 				break;
 			case OUT:
 				//Save save = new Save();
@@ -73,7 +73,50 @@ public class IO implements Runnable{
 	}
 	
 	public void load(String path) {
-		this._path = IO.class.getResource(path).getFile();
+		String current = (new File("")).getAbsolutePath();
+		System.out.println(current);
+		this._path = current + "\\res\\"+path;
 		mode = IN;
+	}
+	
+	public static int getCurrentMode() {
+		return mode;
+	}
+	
+	public String getFileName(String path){
+		int hits = 0;
+		boolean a = false;
+		String result = "";
+		for(int i = 0; i < path.length(); i++){
+			if(path.toCharArray()[i] == '\\'){
+				hits++;
+			}
+		}
+		
+		int hits2 = 0;
+		for(int n = 0; n < path.length(); n++){
+			if(path.toCharArray()[n] == '\\'){
+				hits2++;
+			}
+			if(hits2 == hits){
+				if(!a){
+					a = true;
+					continue;
+				}
+				result += path.toCharArray()[n];
+				
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	public byte[] getBufferData(String key) {
+		return BUFFER_STREAM.get(key);
+	} 
+	
+	public void removeBuffer(String key) {
+		BUFFER_STREAM.remove(key);
 	}
 }
