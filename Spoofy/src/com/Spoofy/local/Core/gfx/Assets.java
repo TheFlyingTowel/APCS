@@ -3,9 +3,10 @@ package com.Spoofy.local.Core.gfx;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
+import com.Spoofy.local.Handler;
+import com.Spoofy.local.Utils.GameIO.IO;
 
-public class Assets {
+public abstract class Assets {
 
 	
 	//Animations
@@ -14,15 +15,22 @@ public class Assets {
 	public static BufferedImage[] waterTop;
 	public static BufferedImage[] water;
 	//Animations
+	Handler handler;
 	
+	public static void init(IO io) {
 	
-	public void init() {
-		BufferedImage sheet;
+		
+		io.load("", false,true);
+		
+		
+		BufferedImage sheet = null;
 		int width, height;
+		
+		
 		
 		//Lava & Water
 		try {
-			sheet = ImageIO.read(getClass().getResourceAsStream("/Sprites/lava_water tiles.png"));
+			
 			
 			lavaTop = new BufferedImage[4];
 			lava = new BufferedImage[4];
@@ -40,7 +48,7 @@ public class Assets {
 			
 			
 			
-		} catch (IOException e) {System.err.println("ERROR: "+e.getLocalizedMessage());}
+		} catch (Exception e) {System.err.println("ERROR: "+e.getLocalizedMessage());}
 		
 		
 		

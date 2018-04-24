@@ -10,12 +10,15 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.rmi.CORBA.Util;
 
+import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.Game;
 import com.Spoofy.local.Core.gfx.Animation;
 import com.Spoofy.local.Core.gfx.Assets;
 import com.Spoofy.local.Core.gfx.Sprite;
 import com.Spoofy.local.Utils.Vector2F;
+import com.Spoofy.local.Utils.GameIO.IO;
 import com.Spoofy.local.objs.GameObject;
 import com.Spoofy.local.objs.KillZone;
 import com.Spoofy.local.objs.Lava;
@@ -38,6 +41,9 @@ public class TileMap {
 	private BufferedImage tileSet;
 	private Tile[][] tiles;
 	
+	protected IO io;
+	protected Handler handler;
+	
 	private int rowOffset, colOffset,rowsToDraw, colsToDraw;
 	private char[] objSymbols = new char[]{'A','a','B','b','C','c','D','d','E','e','F','f','G','g','H','h','I','i','J','j',
 										   'K','k','L','l','M','m','N','n','O','o','P','p','Q','q','R','r','S','s','T','t'
@@ -46,7 +52,7 @@ public class TileMap {
 	private Class<?>[] levelObjs;
 	private ArrayList<GameObject> OBJS = new ArrayList<GameObject>();
 	
-	public TileMap(int tileSize) {
+	public TileMap(Handler handler,int tileSize) {
 		this.tileSize = tileSize;
 		rowsToDraw = Game.HEIGHT / tileSize + 2;
 		colsToDraw = Game.WIDTH / tileSize + 2;
@@ -54,7 +60,8 @@ public class TileMap {
 		position = new Vector2F();
 		min = new Vector2F();
 		max = new Vector2F();
-		
+		this.handler = handler;
+		io = handler.getIO();
 	}
 	
 	
@@ -65,6 +72,10 @@ public class TileMap {
 			} catch (IOException e) {
 				System.err.println("ERROR: "+e.getMessage());
 			}
+			//io.load(path, false);
+			
+			
+			
 			numTiles = tileSet.getWidth() / tileSize;
 			tiles = new Tile[2][numTiles];
 			

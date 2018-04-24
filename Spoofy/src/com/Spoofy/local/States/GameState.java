@@ -40,7 +40,7 @@ public class GameState extends State{
 		cloud.setPosition(new Vector2F());
 		bg.setDirection(new Vector2F(-0.2,0));
 		cloud.setDirection(new Vector2F(-0.5,0));
-		tileMap = new TileMap(30);
+		tileMap = new TileMap(handler,30);
 		tileMap.setMapOBJS(CheckPoint.class,Lava.class,NullObj.class);
 		tileMap.loadTiles("/Tiles_Sets/grasstileset.png");
 		

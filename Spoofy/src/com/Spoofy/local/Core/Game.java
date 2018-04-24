@@ -57,8 +57,7 @@ public class Game implements Runnable {
 		op = new Optimizer(this);
 		op.start();
 		/////////////////////////////
-		asstes = new Assets();
-		asstes.init();
+		Assets.init(io); 
 		Handler handler = new Handler(this);
 		keyInput = new KeyboardInput();
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);

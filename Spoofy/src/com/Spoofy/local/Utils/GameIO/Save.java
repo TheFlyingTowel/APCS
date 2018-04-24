@@ -22,6 +22,15 @@ public class Save extends IO{
 	public void saveBuffer() {
 		saveBytes();
 		
+		if(BUFFER_STREAM.containsKey(name)){
+			BUFFER_STREAM.replace(name, buffer);
+		}else{
+			BUFFER_STREAM.put(name, buffer);
+		}
+		if(BUFFER_STREAM.containsKey(name)) hasAdded = true;
+		else saveBuffer();
+		
+		checkAndChange();
 	}
 	
 	private void saveBytes() {

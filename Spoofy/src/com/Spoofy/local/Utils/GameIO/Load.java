@@ -15,7 +15,7 @@ public class Load extends IO{
 	private int size;
 	private Path path;
 	private String name;
-	
+	private boolean list = false;
 	
 	public Load(int size, String path){ 
 		this.size = size;
@@ -28,6 +28,17 @@ public class Load extends IO{
 	
 	public void loadBuffer(){
 		
+		
+		if(list){
+			File folder = new File(path.toString());
+			File[] files = folder.listFiles();
+			for(File f : files){
+				name = getFileName(f.getAbsolutePath());
+				readBytes(f.getAbsolutePath());
+				BUFFER_STREAM.put(name, buffer);
+			}
+			
+		}
 		
 		readBytes(path.toString());
 		BUFFER_STREAM.put(name, buffer);
@@ -63,7 +74,6 @@ public class Load extends IO{
 		buffer =  fileBuffer;
 	}
 	
-	
 	public void setPath(String s){
 		path = Paths.get(s);
 	}
@@ -90,6 +100,11 @@ public class Load extends IO{
 		return size;
 	}
 	
+	public void setList(boolean b){
+		list = b;
+	}
+	
+	public boolean isList(){return list;}
 	
 	
 }

@@ -2,6 +2,7 @@ package com.Spoofy.local.Utils;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -30,6 +31,11 @@ public abstract class Utills {
 		return null;
 	}
 	
+	
+	public static BufferedImage readByteBufferToImage(byte[] buffer) throws IOException{
+		ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
+		return ImageIO.read(bais);
+	}
 	
 	//Array counter
 	public static int ArrayItemCount(Object[] a) {

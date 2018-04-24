@@ -20,21 +20,22 @@ public class IO implements Runnable{
 	private Thread thread;
 	
 	private String _path;
+	private byte[] buffer;
+	
+	private boolean list;
 	
 	public void run() {
 		System.out.println("IO Stream on.");
 		while(running) {
-			
-			
-			
 			switch(mode) {
 			case IN:
 				Load load = new Load(64,_path);
+				load.setList(list);
 				load.loadBuffer();
 				break;
 			case OUT:
-				//Save save = new Save();
-				checkAndChange();
+				Save save = new Save(buffer,_path);
+				save.saveBuffer();
 				break;
 			case STALL:
 				_path = "";
@@ -72,16 +73,38 @@ public class IO implements Runnable{
 		}
 	}
 	
-	public void load(String path) {
+	public void load(String path,boolean e, boolean list) {
 		String current = (new File("")).getAbsolutePath();
 		System.out.println(current);
-		this._path = current + "\\res\\"+path;
+		this.list = list;
+		if(e){
+			this._path = path;
+			mode = IN;
+			return;
+		}
+		this._path = current + "/res/"+path;
 		mode = IN;
+	}
+	
+	public void save(byte[] buffer,String path, boolean e){
+		String current = (new File("")).getAbsolutePath();
+		if(e){
+			this._path = path;
+			this.buffer = buffer;
+			mode = OUT;
+			return;
+		}
+		this._path = current + "/res/" + path;
+		this.buffer = buffer;
+		mode = OUT;
 	}
 	
 	public static int getCurrentMode() {
 		return mode;
 	}
+	
+	
+	
 	
 	public String getFileName(String path){
 		int hits = 0;
