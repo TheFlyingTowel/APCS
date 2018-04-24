@@ -1,8 +1,13 @@
 package com.Spoofy.local.Utils.GameIO;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import javax.imageio.ImageIO;
 
 
 
@@ -11,7 +16,7 @@ public class IO implements Runnable{
 	public static final int IN = 0xAF;
 	public static final int OUT = 0xEF;
 	public static final int STALL = 0x0;
-	protected static final HashMap<String, byte[]> BUFFER_STREAM = new HashMap<String,byte[]>();
+	public static final HashMap<String, byte[]> BUFFER_STREAM = new HashMap<String,byte[]>();
 	
 	private static int mode = 0x0;
 	protected boolean hasAdded = false;
@@ -46,6 +51,12 @@ public class IO implements Runnable{
 			try {Thread.sleep(500);} catch (InterruptedException e) {System.err.println(e);}
 		}
 	}
+	
+	public static BufferedImage readByteBufferToImage(byte[] buffer) throws IOException{
+		ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
+		return ImageIO.read(bais);
+	}
+	
 	
 	public synchronized void start() {
 		if(running)return;

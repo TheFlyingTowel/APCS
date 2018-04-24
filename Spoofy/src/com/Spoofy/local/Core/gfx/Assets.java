@@ -20,10 +20,17 @@ public abstract class Assets {
 	public static void init(IO io) {
 	
 		
-		io.load("", false,true);
+		io.load("Sprites/", false,true);
+		io.load("Sprites/PixelPack03_Free/", false,true);
 		
 		
-		BufferedImage sheet = null;
+		BufferedImage sheet;
+		try {
+			sheet = IO.readByteBufferToImage(IO.BUFFER_STREAM.get("lava_water_tiles.png"));
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		int width, height;
 		
 		

@@ -32,10 +32,6 @@ public abstract class Utills {
 	}
 	
 	
-	public static BufferedImage readByteBufferToImage(byte[] buffer) throws IOException{
-		ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
-		return ImageIO.read(bais);
-	}
 	
 	//Array counter
 	public static int ArrayItemCount(Object[] a) {

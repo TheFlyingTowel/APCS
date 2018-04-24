@@ -36,8 +36,10 @@ public class Load extends IO{
 				name = getFileName(f.getAbsolutePath());
 				readBytes(f.getAbsolutePath());
 				BUFFER_STREAM.put(name, buffer);
+				System.out.println(String.format("Added buffer %s into main stream.", name));
 			}
-			
+			checkAndChange();
+			return;
 		}
 		
 		readBytes(path.toString());
