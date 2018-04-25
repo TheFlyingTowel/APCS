@@ -137,7 +137,7 @@ public class IO implements Runnable{
 		
 		int hits2 = 0;
 		for(int n = 0; n < path.length(); n++){
-			if(path.toCharArray()[n] == '\\'){
+			if(path.toCharArray()[n] == '\\' || path.toCharArray()[n] == '/'){
 				hits2++;
 			}
 			if(hits2 == hits){
