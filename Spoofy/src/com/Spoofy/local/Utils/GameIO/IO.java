@@ -130,7 +130,7 @@ public class IO implements Runnable{
 		boolean a = false;
 		String result = "";
 		for(int i = 0; i < path.length(); i++){
-			if(path.toCharArray()[i] == '\\'){
+			if(path.toCharArray()[i] == '\\' || path.toCharArray()[i] == '/'){
 				hits++;
 			}
 		}
