@@ -5,11 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 
 import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.Game;
 import com.Spoofy.local.Utils.Vector2F;
+import com.Spoofy.local.Utils.GameIO.IO;
 
 public class Background {
 	private BufferedImage img;
@@ -19,13 +19,15 @@ public class Background {
 	private double moveScale;
 	Handler handler;
 	
-	public Background(Handler h,String path, double ms) {
+	public Background(Handler h,String bufferKey, double ms) {
 		handler = h;
+
+		
 		try {
-			img = ImageIO.read(getClass().getResourceAsStream(path));
+			img = IO.readByteBufferToImage(IO.BUFFER_STREAM.get(bufferKey));
 			moveScale = ms;
-		}catch(IOException e) {
-			System.err.println("Could not load background: -> \n"+e.getMessage());
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 		
 		position = new Vector2F();

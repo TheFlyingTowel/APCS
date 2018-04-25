@@ -44,13 +44,15 @@ public class Game implements Runnable {
 		WindowListener exit = new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
+				for(int i = 0; i < 50; i++)System.out.print("-");
+				System.out.println();
 				io.stop();
 				op.stop();
 				stop();
 				System.exit(0);
 			}
 		};
-		
+		Handler handler = new Handler(this);
 		//////////////////////////////
 		io = new IO();
 		io.start();
@@ -58,7 +60,7 @@ public class Game implements Runnable {
 		op.start();
 		/////////////////////////////
 		Assets.init(io); 
-		Handler handler = new Handler(this);
+
 		keyInput = new KeyboardInput();
 		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
 		g = (Graphics2D) image.getGraphics();
@@ -72,7 +74,6 @@ public class Game implements Runnable {
 	void tick(float delta)
 	{
 		//Update
-		
 		keyInput.tick();
 		state.tick(delta);
 
@@ -109,7 +110,6 @@ public class Game implements Runnable {
 		long fpsTime = 0;
 		float delta = 0;
 		int ticks = 0;
-		
 		while(isRunning){
 			now = System.nanoTime();
 			delta += (now - loop) / targetTime;
@@ -145,9 +145,10 @@ public class Game implements Runnable {
 			thread = new Thread(this);
 			thread.setName("Game");
 			thread.start();
-		
+			System.out.println("Game Opened");
 	}
 
+	
 	public synchronized void stop() {
 		if(!isRunning)return;
 		if(thread != null) {

@@ -7,6 +7,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -65,14 +67,9 @@ public class TileMap {
 	}
 	
 	
-	public void loadTiles(String path) {
+	public void loadTiles(String bufferKey) {
 		
-			try {
-				tileSet = ImageIO.read(getClass().getResourceAsStream(path));
-			} catch (IOException e) {
-				System.err.println("ERROR: "+e.getMessage());
-			}
-			//io.load(path, false);
+			try {tileSet = IO.readByteBufferToImage(IO.BUFFER_STREAM.get(bufferKey));} catch (IOException e) {e.printStackTrace();}
 			
 			
 			
@@ -90,11 +87,18 @@ public class TileMap {
 			}
 			
 	}
-	public void loadMap(String path) {
+	public void loadMap(String keyBuffer) {
 		try {
 			
-			InputStream in = getClass().getResourceAsStream(path);//Gets input data.
-			BufferedReader br = new BufferedReader(new InputStreamReader(in));// Reads input data.
+			String fileBuffer = new String(IO.BUFFER_STREAM.get(keyBuffer));
+
+			
+			
+			
+			Reader in = new StringReader(fileBuffer);//Gets input data.
+			BufferedReader br = new BufferedReader(in);// Reads input data.
+			
+			
 			
 			cols = Integer.parseInt(br.readLine());
 			rows = Integer.parseInt(br.readLine());

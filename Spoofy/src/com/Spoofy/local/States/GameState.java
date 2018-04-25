@@ -34,18 +34,18 @@ public class GameState extends State{
 		
 		
 		
-		bg = new Background(handler, "/Background/BKG03.png", 0.5);
-		cloud = new Background(handler, "/Background/Clouds.png", 1.00005);
+		bg = new Background(handler, "BKG03.png", 0.5);
+		cloud = new Background(handler, "Clouds.png", 1.00005);
 		bg.setPosition(new Vector2F());
 		cloud.setPosition(new Vector2F());
 		bg.setDirection(new Vector2F(-0.2,0));
 		cloud.setDirection(new Vector2F(-0.5,0));
 		tileMap = new TileMap(handler,30);
 		tileMap.setMapOBJS(CheckPoint.class,Lava.class,NullObj.class);
-		tileMap.loadTiles("/Tiles_Sets/grasstileset.png");
+		tileMap.loadTiles("grasstileset.png");
 		
 		
-		tileMap.loadMap("/Maps/level1-1.map");
+		tileMap.loadMap("level1-1.map");
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(0.01);
 		

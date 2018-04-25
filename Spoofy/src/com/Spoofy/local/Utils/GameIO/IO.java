@@ -18,6 +18,8 @@ public class IO implements Runnable{
 	public static final int STALL = 0x0;
 	public static final HashMap<String, byte[]> BUFFER_STREAM = new HashMap<String,byte[]>();
 	
+	public static boolean debug = false;
+	
 	private static int mode = 0x0;
 	protected boolean hasAdded = false;
 	
@@ -32,23 +34,27 @@ public class IO implements Runnable{
 	public void run() {
 		System.out.println("IO Stream on.");
 		while(running) {
-			switch(mode) {
-			case IN:
-				Load load = new Load(64,_path);
-				load.setList(list);
-				load.loadBuffer();
-				break;
-			case OUT:
-				Save save = new Save(buffer,_path);
-				save.saveBuffer();
-				break;
-			case STALL:
-				_path = "";
-				break;
+				switch(mode) {
+				case IN:
+					log("IN");
+					Load load = new Load(64,_path);
+					load.setList(list);
+					load.loadBuffer();
+					break;
+				case OUT:
+					log("OUT");
+					Save save = new Save(buffer,_path);
+					save.saveBuffer();
+					break;
+				case STALL:
+					log("STALL");
+					_path = "";
+					break;
+					
+				}
 				
-			}
+				try {Thread.sleep(500);} catch (InterruptedException e) {System.err.println(e);}
 			
-			try {Thread.sleep(500);} catch (InterruptedException e) {System.err.println(e);}
 		}
 	}
 	
@@ -57,12 +63,14 @@ public class IO implements Runnable{
 		return ImageIO.read(bais);
 	}
 	
+
 	
 	public synchronized void start() {
 		if(running)return;
 		running = true;
 		thread = new Thread(this);
 		thread.setName("IO");
+		
 		thread.start();
 	}
 	
@@ -85,16 +93,19 @@ public class IO implements Runnable{
 	}
 	
 	public void load(String path,boolean e, boolean list) {
-		String current = (new File("")).getAbsolutePath();
-		System.out.println(current);
-		this.list = list;
-		if(e){
-			this._path = path;
+		if(mode == STALL) {
+			String current = (new File("")).getAbsolutePath();
+			this.list = list;
+			if(e){
+				_path = path;
+				mode = IN;
+				return;
+			}
+			_path = current + "/res/"+path;
 			mode = IN;
 			return;
 		}
-		this._path = current + "/res/"+path;
-		mode = IN;
+		
 	}
 	
 	public void save(byte[] buffer,String path, boolean e){
@@ -113,10 +124,7 @@ public class IO implements Runnable{
 	public static int getCurrentMode() {
 		return mode;
 	}
-	
-	
-	
-	
+
 	public String getFileName(String path){
 		int hits = 0;
 		boolean a = false;
@@ -153,4 +161,14 @@ public class IO implements Runnable{
 	public void removeBuffer(String key) {
 		BUFFER_STREAM.remove(key);
 	}
+	
+	protected void log(String s) {
+		if(debug)System.out.println("[IO]: "+s);
+	}
+	
+	protected void log(String s, Object... obj) {
+		if(debug)System.out.println("[IO]: "+String.format(s, obj));
+	}
+	
+	
 }

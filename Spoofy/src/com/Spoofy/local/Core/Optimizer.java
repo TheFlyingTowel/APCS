@@ -5,6 +5,9 @@ public class Optimizer implements Runnable{
 	Game game;
 	private boolean isRunning = false;
 	private Thread thread;
+	
+	public static boolean debug = false;
+	
 	public Optimizer(Game game) {
 		this.game = game;
 	}
@@ -14,16 +17,16 @@ public class Optimizer implements Runnable{
 		int hits = 0,highHits = 0, count = 0;
 		
 		System.out.println("Optimizer started");
-		System.out.println("Target: "+lastTarget);
+		log("Target: "+lastTarget);
 		while(isRunning) {
 
 			
 			if(game.getFPS() < 30) {
-				System.out.println("Hitt: "+hits);
+				log("Hitt: "+hits);
 				if(hits > 5) {
 					lastTarget += 30;
 					game.setTargetTime(1000000000 / lastTarget);
-					System.out.println("Target Change: "+lastTarget);
+					log("Target Change: "+lastTarget);
 					hits = 0;
 				}
 				hits++;
@@ -33,7 +36,7 @@ public class Optimizer implements Runnable{
 				if(highHits > 5) {
 					lastTarget -= 30;
 					game.setTargetTime(1000000000 / lastTarget);
-					System.out.println("Target Change: "+lastTarget);
+					log("Target Change: "+lastTarget);
 					highHits = 0;
 				}
 				highHits++;
@@ -48,7 +51,7 @@ public class Optimizer implements Runnable{
 			
 			if(!game.getThread().isAlive()) {
 				isRunning = false;
-				System.out.println("Optimizer stoped.");
+				log("Optimizer stoped.");
 			}
 			
 			///////////////////
@@ -83,6 +86,14 @@ public class Optimizer implements Runnable{
 	
 	public boolean isRunning() {
 		return isRunning;
+	}
+	
+	protected void log(String s) {
+		if(debug)System.out.println("[Optimizer]: "+s);
+	}
+	
+	protected void log(String s, Object... obj) {
+		if(debug)System.out.println("[Optimizer]: "+String.format(s, obj));
 	}
 	
 }

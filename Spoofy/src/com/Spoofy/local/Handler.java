@@ -15,6 +15,9 @@ public class Handler {
 		game = g;
 	}
 	
+	public Game getGame() {
+		return game;
+	}
 	
 	public IO getIO() {
 		return game.getIO();

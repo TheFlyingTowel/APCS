@@ -34,10 +34,12 @@ public class Load extends IO{
 			File[] files = folder.listFiles();
 			for(File f : files){
 				name = getFileName(f.getAbsolutePath());
+				if(!name.contains("."))continue;
 				readBytes(f.getAbsolutePath());
 				BUFFER_STREAM.put(name, buffer);
-				System.out.println(String.format("Added buffer %s into main stream.", name));
+				System.out.println(String.format("Loadded %s", name));
 			}
+			hasAdded = true;
 			checkAndChange();
 			return;
 		}
@@ -45,7 +47,9 @@ public class Load extends IO{
 		readBytes(path.toString());
 		BUFFER_STREAM.put(name, buffer);
 		System.out.println(String.format("Added buffer %s into main stream.", name));
+		hasAdded = true;
 		checkAndChange();
+		notify();
 	}
 	
 	
@@ -61,14 +65,13 @@ public class Load extends IO{
 			fis = new FileInputStream(file);
 			fis.read(fileBuffer);
 		}catch(IOException e) {
-			System.err.println("ERROR: "+e);
+			e.printStackTrace();
 		}finally {
 			if(fis != null) {
 				try {
 					fis.close();
 				} catch (IOException e) {
-					System.err.println("ERROR: "+e);
-					e.getLocalizedMessage();
+					e.printStackTrace();
 				}
 			}
 		}
