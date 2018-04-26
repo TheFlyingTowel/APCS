@@ -27,14 +27,16 @@ public class Load extends IO{
 	
 	
 	public void loadBuffer(){
-		
+
 		
 		if(list){
 			File folder = new File(path.toString());
 			File[] files = folder.listFiles();
+			
 			for(File f : files){
 				name = getFileName(f.getAbsolutePath());
 				if(!name.contains("."))continue;
+				if(name.contains(".map") || name.contains(".sav"))Utills.Tow_exe(f.getAbsolutePath(), true, ENCRYPTION_SIZE);
 				readBytes(f.getAbsolutePath());
 				BUFFER_STREAM.put(name, buffer);
 				System.out.println(String.format("Loadded %s", name));
@@ -43,7 +45,8 @@ public class Load extends IO{
 			checkAndChange();
 			return;
 		}
-		
+		name =  getFileName(path.toString());
+		if(name.contains(".map") || name.contains(".sav"))Utills.Tow_exe(path.toString(), true, ENCRYPTION_SIZE);
 		readBytes(path.toString());
 		BUFFER_STREAM.put(name, buffer);
 		System.out.println(String.format("Added buffer %s into main stream.", name));

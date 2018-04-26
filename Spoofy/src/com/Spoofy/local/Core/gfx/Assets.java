@@ -66,10 +66,9 @@ public abstract class Assets {
 	}
 	
 	private static void pause() {
-		long startTime = System.nanoTime();
 		do {
 			try {
-				Thread.sleep(200 + (((System.nanoTime() - startTime) / 1000000)));
+				Thread.sleep(200);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}

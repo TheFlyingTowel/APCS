@@ -4,7 +4,6 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.imageio.ImageIO;
@@ -16,6 +15,7 @@ public class IO implements Runnable{
 	public static final int IN = 0xAF;
 	public static final int OUT = 0xEF;
 	public static final int STALL = 0x0;
+	public static final int ENCRYPTION_SIZE = 0xA;
 	public static final HashMap<String, byte[]> BUFFER_STREAM = new HashMap<String,byte[]>();
 	
 	public static boolean debug = false;

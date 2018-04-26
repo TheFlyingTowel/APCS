@@ -96,25 +96,23 @@ public abstract class Utills {
 	//Method is used to start Tow.exe
 	private static void executeTow_exe(String key,String buffer, boolean a) {
 		try {
-			Process tow = new ProcessBuilder((new File("")).getAbsolutePath() + "\\res\\utills\\Tow.exe",key, buffer, String.valueOf(a)).start();
+			Process tow = new ProcessBuilder((new File("")).getAbsolutePath() + "\\res\\utills\\Tow.exe",key, buffer, Integer.toString( (a) ? 1 : 0)).start();
 			InputStream is = tow.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
-			Thread thread = new Thread(new Runnable() {
 				
-				@Override
-				public void run() {
+
 					String line;
 					try {
 						while((line = br.readLine()) != null || tow.isAlive()) {
-							System.out.println(line+"\n");
+							System.out.print("[Tow.exe]: "+line+"\n");
 						}
 						
 						if(tow.exitValue() != 0) {
 							InputStreamReader error = new InputStreamReader(tow.getErrorStream());
-							BufferedReader br = new BufferedReader(error);
+							br = new BufferedReader(error);
 							String errorVal = "";
-							while((line = br.readLine()) != null) {
+							while((line = br.readLine()) != null || tow.isAlive()) {
 								errorVal += line+"\n";
 							}
 							System.err.println("[Tow.exe]: "+errorVal);
@@ -125,12 +123,9 @@ public abstract class Utills {
 					}
 					
 					System.out.println("Tow.exe done, exit_value = "+tow.exitValue());
-				}
-			});		
-			thread.start();
-			thread.setName("Tow.exe");
-			thread.join();
-		} catch (IOException | InterruptedException e) {
+				
+
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

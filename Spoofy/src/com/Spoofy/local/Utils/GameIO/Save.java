@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import com.Spoofy.local.Utils.Utills;
+
 public class Save extends IO{
 	private byte[] buffer;
 	private int size;
@@ -41,6 +43,8 @@ public class Save extends IO{
 			file = new File(path.toString());
 			fos = new FileOutputStream(file);
 			
+			
+			
 			if(!file.exists())file.createNewFile();
 			fos.write(buffer);
 			fos.flush();
@@ -54,6 +58,8 @@ public class Save extends IO{
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
+				//Encrypt buffer
+				Utills.Tow_exe(path.toString(), false, ENCRYPTION_SIZE);
 			
 		}
 		
