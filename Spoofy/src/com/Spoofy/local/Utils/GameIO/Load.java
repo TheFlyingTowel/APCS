@@ -36,10 +36,15 @@ public class Load extends IO{
 			for(File f : files){
 				name = getFileName(f.getAbsolutePath());
 				if(!name.contains("."))continue;
-				if(name.contains(".map") || name.contains(".sav"))Utills.Tow_exe(f.getAbsolutePath(), true, ENCRYPTION_SIZE);
+				if(name.contains(".map") || name.contains(".sav")) {
+					Utills.Tow_exe(f.getAbsolutePath(), true, ENCRYPTION_SIZE);
+				}
 				readBytes(f.getAbsolutePath());
 				BUFFER_STREAM.put(name, buffer);
-				System.out.println(String.format("Loadded %s", name));
+				System.out.println(String.format("[IO]: Loadded %s", name));
+				if(new File(f.getAbsolutePath()).length() > 0 && (name.contains(".map") || name.contains(".sav"))) {
+					Utills.Tow_exe(path.toString(), false, ENCRYPTION_SIZE);//Encrypt the file back right after buffer has been added.  
+				}
 			}
 			hasAdded = true;
 			checkAndChange();
@@ -49,7 +54,8 @@ public class Load extends IO{
 		if(name.contains(".map") || name.contains(".sav"))Utills.Tow_exe(path.toString(), true, ENCRYPTION_SIZE);
 		readBytes(path.toString());
 		BUFFER_STREAM.put(name, buffer);
-		System.out.println(String.format("Added buffer %s into main stream.", name));
+		System.out.println(String.format("[IO]: Loadded %s", name));
+		if(new File(path.toString()).length() > 0 && (!name.contains(".png") || !name.contains(".jpeg") || !name.contains(".gif") || !name.contains(".ogg")))Utills.Tow_exe(path.toString(), false, ENCRYPTION_SIZE);//Encrypt the file back right after buffer has been added.  
 		hasAdded = true;
 		checkAndChange();
 		notify();

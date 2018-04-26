@@ -6,7 +6,7 @@ public class Optimizer implements Runnable{
 	private boolean isRunning = false;
 	private Thread thread;
 	
-	public static boolean debug = false;
+	public static boolean debug = true;
 	
 	public Optimizer(Game game) {
 		this.game = game;
