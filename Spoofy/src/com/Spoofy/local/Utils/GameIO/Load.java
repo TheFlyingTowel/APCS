@@ -43,7 +43,7 @@ public class Load extends IO{
 				BUFFER_STREAM.put(name, buffer);
 				System.out.println(String.format("[IO]: Loadded %s", name));
 				if(new File(f.getAbsolutePath()).length() > 0 && (name.contains(".map") || name.contains(".sav"))) {
-					Utills.Tow_exe(path.toString(), false, ENCRYPTION_SIZE);//Encrypt the file back right after buffer has been added.  
+					Utills.Tow_exe(f.getAbsolutePath(), false, ENCRYPTION_SIZE);//Encrypt the file back right after buffer has been added.  
 				}
 			}
 			hasAdded = true;

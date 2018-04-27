@@ -22,7 +22,7 @@ public class Player extends Creature{
 	private Vector2F lastPoint;
 	
 	public static boolean isMoving = false;
-	
+	public String Name = "";
 	
 	
 	public Player(Handler handler,int x,int y,int width,int height, TileMap tm, Dimension collision) {
@@ -178,7 +178,19 @@ public class Player extends Creature{
 
 
 
-	
+	public String getSave() {
+		String dat = "[PLAYER]\n"
+					+ "[X:{%s}]\n"
+					+ "[Y:{%s}]\n"
+					+ "[Health:{%s}]\\n"
+					+ "[Name:{%s}]\\n"
+					+ "[PT:{%s}]\\n";
+					
+		
+		String buffer = String.format(dat, position.x,position.y,health,Name);
+		
+		return dat;
+	}
 	
 
 }
