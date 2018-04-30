@@ -33,8 +33,6 @@ public class Game implements Runnable {
 	private KeyboardInput keyInput;
 	private BufferedImage image;
 	private Graphics2D g;
-	private State state;
-	private Assets asstes;
 	private long targetTime;
 	private Optimizer op;
 	private IO io;

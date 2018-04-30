@@ -23,6 +23,9 @@ public class GameState extends State{
 	Background cloud;
 	TileMap tileMap;
 	KillZone killzone;
+	
+	
+	
 	public GameState(Handler handler){
 		super(handler);
 	}
@@ -46,7 +49,7 @@ public class GameState extends State{
 		tileMap.loadTiles("grasstileset.png");
 		
 		
-		tileMap.loadMap("level1-1.map");
+		tileMap.loadMap("Enter_World.map");
 		tileMap.setPosition(0, 0);
 		tileMap.setTween(0.01);
 		
