@@ -16,7 +16,9 @@ public class StartState extends State{
 	Background bg;
 	Background cloud;
 	Font font;
-	String[] choices = {"Start","Options"};
+	String[] choices1 = {"Start","Options"};
+	String[] options = {"Optimizer: ", "Music: ","Vol: ", "Back"};
+	String[] currentMenu = choices1;
 	int pos = 0;
 	int size = 32, xpos = 128;
 	public StartState(Handler h) {
@@ -48,8 +50,8 @@ public class StartState extends State{
 				pos++;
 				hold();
 			}
-			if(pos < 0)pos = choices.length - 1;
-			if(!(pos < choices.length))pos = 0;
+			if(pos < 0)pos = choices1.length - 1;
+			if(!(pos < choices1.length))pos = 0;
 		
 			if(handler.getKeyInput().isEnter()) {
 				switch (pos) {
@@ -80,10 +82,10 @@ public class StartState extends State{
 		
 		g.setFont(new Font("sans", Font.BOLD,10));
 		g.setColor(Color.black);
-		for(int i = 0; i < choices.length; i++) {
+		for(int i = 0; i < choices1.length; i++) {
 			if(i == pos)g.setColor(Color.RED);
 			else g.setColor(Color.black);
-			g.drawString(choices[i], xpos + 42, 120 + (i * 16));
+			g.drawString(choices1[i], xpos + 42, 120 + (i * 16));
 		}
 		
 		

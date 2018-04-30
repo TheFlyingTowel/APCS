@@ -97,8 +97,10 @@ public abstract class Utills {
 	
 	//Method is used to start Tow.exe
 	private static void executeTow_exe(String key,String buffer, boolean a) {
+		File file = new File((new File("")).getAbsolutePath() + "/res/utills/Tow.exe");
+		System.out.println("CAN EXE: "+file.canExecute());
 		try {
-			Process tow = new ProcessBuilder((new File("")).getAbsolutePath() + "\\res\\utills\\Tow.exe",key, buffer, Integer.toString( (a) ? 1 : 0)).start();
+			Process tow = new ProcessBuilder((new File("")).getAbsolutePath() + "/res/utills/Tow.exe",key, buffer, Integer.toString( (a) ? 1 : 0)).start();
 			InputStream is = tow.getInputStream();
 			InputStreamReader isr = new InputStreamReader(is);
 			BufferedReader br = new BufferedReader(isr);
