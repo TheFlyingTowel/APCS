@@ -6,12 +6,12 @@ import java.awt.event.KeyListener;
 public class KeyboardInput implements KeyListener{
 
 	
-	private boolean up, down, left, right, btn1, btn2;
+	private boolean up, down, left, right, btn1, btn2, enter;
 	private boolean key[] = new boolean[256];
 	
 	int btn1KeyCode = KeyEvent.VK_Z;
 	int btn2KeyCode = KeyEvent.VK_X;
-	int keyCodes[] = new int[6];
+	int keyCodes[] = new int[7];
 	
 	
 	
@@ -23,6 +23,7 @@ public class KeyboardInput implements KeyListener{
 		keyCodes[3]  = KeyEvent.VK_RIGHT;
 		keyCodes[4]  = KeyEvent.VK_Z;
 		keyCodes[5]  = KeyEvent.VK_X;
+		keyCodes[6]  = KeyEvent.VK_ENTER; 
 	}
 	
 	
@@ -42,7 +43,7 @@ public class KeyboardInput implements KeyListener{
 		right = key[keyCodes[3]];
 		btn1 = key[keyCodes[4]];
 		btn2 = key[keyCodes[5]];
-		
+		enter = key[keyCodes[6]];
 		
 		
 	}
@@ -68,7 +69,7 @@ public class KeyboardInput implements KeyListener{
 	public boolean isRight() {return right;}
 	public boolean isBtn1() {return btn1;}
 	public boolean isBtn2() {return btn2;}
-	
+	public boolean isEnter() {return enter;}
 	
 	
 	

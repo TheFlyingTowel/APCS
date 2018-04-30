@@ -8,6 +8,7 @@ import com.Spoofy.local.Core.Game;
 import com.Spoofy.local.Core.gfx.Background;
 import com.Spoofy.local.Core.gfx.mapping.TileMap;
 import com.Spoofy.local.Utils.Vector2F;
+import com.Spoofy.local.Utils.GameIO.IO;
 import com.Spoofy.local.objs.KillZone;
 import com.Spoofy.local.objs.Lava;
 import com.Spoofy.local.objs.NullObj;
@@ -92,4 +93,21 @@ public class GameState extends State{
 		
 		
 	}
+	
+	public byte[] getSave() {
+		String save_buffer = "";
+		String level =        "[LEVEL]\n"
+							+ "<NAME:{%s}>\n"
+							+ "<MAP:{%s}>\n"
+							+ "<BACKGROUND:{%s}>\n"
+							+ "<FORGROUND:{%s}>\n"
+							+ "[<LEVEL>]\n";
+		
+		String level_buffer = String.format(level, "n/a","level1-1.map","BKG03.png","Clouds.png");
+		
+		
+		save_buffer += player.getSave()+level_buffer;
+		return save_buffer.getBytes();
+	}
+	
 }

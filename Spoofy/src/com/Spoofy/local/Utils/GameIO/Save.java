@@ -59,7 +59,7 @@ public class Save extends IO{
 					e.printStackTrace();
 				}
 				//Encrypt buffer
-				Utills.Tow_exe(path.toString(), false, ENCRYPTION_SIZE);
+				//Utills.Tow_exe(path.toString(), false, ENCRYPTION_SIZE);
 			
 		}
 		

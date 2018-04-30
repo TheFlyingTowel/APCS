@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 
 import com.Spoofy.local.Core.Game;
 import com.Spoofy.local.Core.gfx.GameScreen;
+import com.Spoofy.local.Utils.TimeCount;
 import com.Spoofy.local.Utils.GameIO.IO;
 import com.Spoofy.local.input.KeyboardInput;
 
@@ -39,6 +40,10 @@ public class Handler {
 		return game.getFPS();
 	}
 
+	public TimeCount getClock() {
+		return game.getClock();
+	}
+	
 
 	
 }

@@ -121,6 +121,13 @@ public class IO implements Runnable{
 		mode = OUT;
 	}
 	
+	public void saveGame(byte[] buffer, String name) {
+		String p = (new File("")).getAbsolutePath() + "/res/saves/"+name+".sav";
+		this.buffer = buffer;
+		this._path = p;
+		mode = OUT;
+	}
+	
 	public static int getCurrentMode() {
 		return mode;
 	}

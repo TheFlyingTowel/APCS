@@ -33,6 +33,8 @@ public abstract class Utills {
 	
 	
 	
+	
+	
 	//Array counter
 	public static int ArrayItemCount(Object[] a) {
 		int n = 0;

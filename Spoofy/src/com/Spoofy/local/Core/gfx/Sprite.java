@@ -5,15 +5,17 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import com.Spoofy.local.Utils.GameIO.IO;
+
 
 public class Sprite {
 
 	private BufferedImage sprite;
-	public Sprite(String path) {
+	public Sprite(String key) {
 		try {
-			sprite = ImageIO.read(getClass().getResourceAsStream(path));
-		}catch(IOException e) {
-			System.err.println("ERROR: "+e.getMessage());
+			sprite = IO.readByteBufferToImage(IO.BUFFER_STREAM.get(key));
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	

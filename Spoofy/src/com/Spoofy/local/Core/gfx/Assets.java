@@ -32,6 +32,8 @@ public abstract class Assets {
 		pause();
 		io.load("Tiles_Sets/", false, true);
 		pause();
+		io.load("saves/", false, true);
+		pause();
 		
 		BufferedImage sheet = null;
 		try {
