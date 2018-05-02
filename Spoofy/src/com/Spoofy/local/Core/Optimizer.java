@@ -25,6 +25,7 @@ public class Optimizer implements Runnable{
 				log("Hitt: "+hits);
 				if(hits > 5) {
 					lastTarget += 30;
+					lastTarget = (lastTarget == 0) ? 1 : lastTarget;
 					game.setTargetTime(1000000000 / lastTarget);
 					log("Target Change: "+lastTarget);
 					hits = 0;
@@ -35,6 +36,7 @@ public class Optimizer implements Runnable{
 			if(game.getFPS() > 60) {
 				if(highHits > 5) {
 					lastTarget -= 30;
+					lastTarget = (lastTarget == 0) ? 1 : lastTarget;
 					game.setTargetTime(1000000000 / lastTarget);
 					log("Target Change: "+lastTarget);
 					highHits = 0;

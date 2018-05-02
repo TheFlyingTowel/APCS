@@ -2,7 +2,6 @@ package com.Spoofy.local.Utils;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -97,8 +96,6 @@ public abstract class Utills {
 	
 	//Method is used to start Tow.exe
 	private static void executeTow_exe(String key,String buffer, boolean a) {
-		File file = new File((new File("")).getAbsolutePath() + "/res/utills/Tow.exe");
-		System.out.println("CAN EXE: "+file.canExecute());
 		try {
 			Process tow = new ProcessBuilder((new File("")).getAbsolutePath() + "/res/utills/Tow.exe",key, buffer, Integer.toString( (a) ? 1 : 0)).start();
 			InputStream is = tow.getInputStream();

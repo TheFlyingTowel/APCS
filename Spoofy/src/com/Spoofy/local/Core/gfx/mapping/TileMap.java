@@ -26,6 +26,7 @@ import com.Spoofy.local.objs.KillZone;
 import com.Spoofy.local.objs.Lava;
 import com.Spoofy.local.objs.NullObj;
 import com.Spoofy.local.objs.entitys.CheckPoint;
+import com.Spoofy.local.objs.entitys.SpawnPosition;
 
 public class TileMap {
 
@@ -74,7 +75,7 @@ public class TileMap {
 			
 			
 			numTiles = tileSet.getWidth() / tileSize;
-			tiles = new Tile[2][numTiles];
+			tiles = new Tile[3][numTiles];
 			
 			BufferedImage subImage;
 			for(int col = 0; col < numTiles; col++) {
@@ -140,6 +141,8 @@ public class TileMap {
 										}
 										
 										obj  = new Lava(null, new Animation(lava, 150), 0, 0, 32, 32, this);
+									}else if(levelObjs[i] == SpawnPosition.class) {
+										obj = new SpawnPosition(handler, 0, 0, 32, 32, this, new Dimension());
 									}//Add GameObject classes here
 									
 								}catch(Exception e) {
@@ -192,6 +195,7 @@ public class TileMap {
 				int posY = (int) position.y + row * tileSize;
 				
 				if(isItemOnScreen(posX, posY, tileSize, tileSize))g.drawImage(tiles[r][c].getImage(), posX, posY, null);
+
 			}
 		}
 		

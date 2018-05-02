@@ -25,6 +25,7 @@ public class Player extends Creature{
 	public String Name = "";
 	
 	
+	
 	public Player(Handler handler,int x,int y,int width,int height, TileMap tm, Dimension collision) {
 		super(handler, new Animation(null,5), x, y, width, height, tm, collision);
 		setCollisionPosition(0, 16);
