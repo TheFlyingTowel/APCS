@@ -3,6 +3,7 @@ package com.Spoofy.local;
 import java.awt.image.BufferedImage;
 
 import com.Spoofy.local.Core.Game;
+import com.Spoofy.local.Core.Optimizer;
 import com.Spoofy.local.Core.gfx.GameScreen;
 import com.Spoofy.local.Utils.TimeCount;
 import com.Spoofy.local.Utils.GameIO.IO;
@@ -44,6 +45,8 @@ public class Handler {
 		return game.getClock();
 	}
 	
-
+	public Optimizer getOptimizer() {
+		return game.getOptimizer();
+	}
 	
 }

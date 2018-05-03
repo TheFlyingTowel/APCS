@@ -222,4 +222,8 @@ public class Game implements Runnable {
 		return clock;
 	}
 	
+	public Optimizer getOptimizer() {
+		return op;
+	}
+	
 }
