@@ -8,6 +8,9 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 import com.Spoofy.local.Handler;
 import com.Spoofy.local.Core.gfx.Assets;
@@ -49,6 +52,8 @@ public class Game implements Runnable {
 				System.out.println();
 				clock.endTimer();
 				save();
+				//Clear audio stream buffer
+				try {PrintWriter w = new PrintWriter((new File("")).getAbsolutePath()+"/res/libs/AudioStream");w.close();} catch (FileNotFoundException e1) {e1.printStackTrace();}
 				pause();
 				io.stop();
 				op.stop();
@@ -66,7 +71,7 @@ public class Game implements Runnable {
 		Assets.init(io); 
 
 		keyInput = new KeyboardInput();
-		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
+		image = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_ARGB);
 		g = (Graphics2D) image.getGraphics();
 		display = new Display("Spoofy",keyInput);
 		display.addWindowListener(exit);
@@ -101,8 +106,10 @@ public class Game implements Runnable {
 		Graphics g2 = display.getScreen().getGraphics();
 		/*g.setColor(Color.YELLOW);
 		g.drawString("FPS: "+fps, 8, 48);*/
+		g2.setColor(Color.BLACK);
 		g2.drawImage(image, 0, 0,(WIDTH * GameScreen.SCALE), (HEIGHT * GameScreen.SCALE), null);
 		g2.dispose();
+		g2.clearRect(0, 0, WIDTH, HEIGHT);
 	}
 	
 	@Override
@@ -110,7 +117,7 @@ public class Game implements Runnable {
 		init();
 		fps = FPS;
 		long now = System.nanoTime();
-		targetTime = 1000000000 / FPS;
+		targetTime = 0x3B9ACA00 / FPS;
 		long loop = now;
 		long fpsTime = 0;
 		float delta = 0;
@@ -129,14 +136,14 @@ public class Game implements Runnable {
 				delta--;
 			}
 			
-			if(fpsTime >= 1000000000) {
+			if(fpsTime >= 0x3B9ACA00) {
 				fps = ticks;
 				ticks = 0;
 				fpsTime = 0;
 			}
 			
 			try {
-				Thread.sleep((long) (loop - now + targetTime) / 1000000);
+				Thread.sleep((long) (loop - now + targetTime) / 0xF4240);
 			}catch(InterruptedException e) {
 				System.err.println("Game Thread could not sleep: -> \n"+e.getMessage());
 			}

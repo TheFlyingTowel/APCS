@@ -34,6 +34,9 @@ public abstract class Assets {
 		pause();
 		io.load("saves/", false, true);
 		pause();
+		io.load("Sounds/", false, true);
+		pause();
+		
 		
 		BufferedImage sheet = null;
 		try {
