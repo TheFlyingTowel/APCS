@@ -77,7 +77,7 @@ public class StartState extends State{
 						else if(handler.getKeyInput().isRight())currentVol += 0.25;
 					}
 				}
-			}
+			}//https://solarianprogrammer.com/2014/12/08/getting-started-jogl-java-opengl-eclipse/#JOGL
 			if(currentVol >= Sound.MAX_VOL) currentVol = Sound.MAX_VOL;
 			if(currentVol <= 0) currentVol = 0;
 			
