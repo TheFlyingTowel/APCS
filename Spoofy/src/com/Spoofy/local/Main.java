@@ -14,10 +14,10 @@ public class Main {
 	
 	
 	public static void main(String[] args) {
-		//Game game = new Game();
-		//game.start();
+		Game game = new Game();
+		game.start();
 		
-		GLWindow window = new GLWindow();
+		//GLWindow window = new GLWindow();
 		
 		/*System.out.println((new File("")).getAbsolutePath());
 		File folder  = new File((new File("")).getAbsolutePath() + "\\res\\Maps\\");
